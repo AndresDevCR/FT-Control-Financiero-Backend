@@ -1,20 +1,45 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+</p>
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+[circleci-url]: https://circleci.com/gh/nestjs/nest
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+  # DMS Backend
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+## Description
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+This is the backend for the DMS project. It is built using NestJS, making use of the TypeORM library for database management.
+
+## Installation
+
+1. Up docker-compose.yml
+
+```
+docker-compose up -d
+```
+
+2. Install dependencies
+
+```
+npm install
+```
+
+3. Run
+
+```
+npm run start:dev
+```
+
+## Test
+
+```
+npm run test
+```
+
+## Production
+
+```
+npm run start:prod
+```
+
