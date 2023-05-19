@@ -8,7 +8,7 @@ import { TerminusModule } from '@nestjs/terminus';
 import { AuthModule } from './modules/auth/auth.module';
 import { TypeOrmConfigService } from './typeorm.service';
 import { AdministrationModules } from './modules/administration';
-import { InventoryModule } from './inventory/inventory.module';
+import { financialControlModules } from './modules/financial_control';
 
 @Module({
   imports: [
@@ -18,7 +18,7 @@ import { InventoryModule } from './inventory/inventory.module';
     HttpModule,
     AuthModule,
     ...AdministrationModules,
-    InventoryModule,
+    ...financialControlModules,
   ],
   controllers: [AppController],
   providers: [AppService],
