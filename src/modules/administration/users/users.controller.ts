@@ -18,9 +18,9 @@ import { CreateUserDto } from './create-user.dto';
 import { ApiParam, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { User } from './user.entity';
 import { AuthGuard } from '@nestjs/passport';
-@ApiTags('Auth')
+@ApiTags('Users')
 @ApiBearerAuth()
-@Controller('Users')
+@Controller('user')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
