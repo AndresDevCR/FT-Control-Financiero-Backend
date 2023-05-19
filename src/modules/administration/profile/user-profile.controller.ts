@@ -10,9 +10,10 @@ import {
 } from '@nestjs/common';
 import { UserProfileService } from './user-profile.service';
 import { CreateProfileDto } from './create-profile.dto';
-import { ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiParam, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 @ApiTags('Auth')
+@ApiBearerAuth()
 @Controller('user-profile')
 export class UserProfileController {
   constructor(private readonly userProfileService: UserProfileService) {}

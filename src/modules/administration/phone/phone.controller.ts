@@ -10,9 +10,10 @@ import {
 } from '@nestjs/common';
 import { UserPhoneService } from './phone.service';
 import { CreatePhoneDto } from './create-phone.dto';
-import { ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiParam, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 @ApiTags('Auth')
+@ApiBearerAuth()
 @Controller('user-phone')
 export class UserPhoneController {
   constructor(private readonly userPhoneService: UserPhoneService) {}

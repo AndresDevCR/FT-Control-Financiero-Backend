@@ -15,10 +15,11 @@ import { Request } from 'express';
 import { UsersService } from './users.service';
 import { JwtAuthGuard } from '../../auth/auth.guard';
 import { CreateUserDto } from './create-user.dto';
-import { ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiParam, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { User } from './user.entity';
 import { AuthGuard } from '@nestjs/passport';
 @ApiTags('Auth')
+@ApiBearerAuth()
 @Controller('user')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}

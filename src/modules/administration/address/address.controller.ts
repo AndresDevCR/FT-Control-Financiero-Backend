@@ -10,11 +10,12 @@ import {
 } from '@nestjs/common';
 import { AddressService } from './address.service';
 import { CreateAddressDto } from './create-address.dto';
-import { ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiParam, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('Auth')
 @Controller('address')
+@ApiBearerAuth()
 export class AddressController {
   constructor(private readonly addressService: AddressService) {}
 

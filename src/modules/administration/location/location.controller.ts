@@ -10,10 +10,11 @@ import {
 } from '@nestjs/common';
 import { LocationService } from './location.service';
 import { CreateLocationDto } from './create-location.dto';
-import { ApiTags, ApiParam, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiParam, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('Auth')
+@ApiBearerAuth()
 @Controller('location')
 export class LocationController {
   constructor(private readonly locationService: LocationService) {}

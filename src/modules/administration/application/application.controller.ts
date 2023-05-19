@@ -9,8 +9,9 @@ import {
 } from '@nestjs/common';
 import { ApplicationService } from './application.service';
 import { CreateApplicationDto } from './create-application.dto';
-import { ApiTags, ApiResponse, ApiParam } from '@nestjs/swagger';
+import { ApiTags, ApiResponse, ApiParam, ApiBearerAuth } from '@nestjs/swagger';
 @ApiTags('Auth')
+@ApiBearerAuth()
 @Controller('application')
 export class ApplicationController {
   constructor(private readonly applicationService: ApplicationService) {}
