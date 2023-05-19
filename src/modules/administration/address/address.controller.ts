@@ -14,7 +14,7 @@ import { ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('Auth')
-@Controller('api/v1/address')
+@Controller('address')
 export class AddressController {
   constructor(private readonly addressService: AddressService) {}
 

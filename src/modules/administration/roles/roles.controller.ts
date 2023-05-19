@@ -13,7 +13,7 @@ import { CreateRoleDto } from './create-role.dto';
 import { ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 @ApiTags('Auth')
-@Controller('api/v1/role')
+@Controller('role')
 export class RolesController {
   constructor(private readonly rolesService: RolesService) {}
 

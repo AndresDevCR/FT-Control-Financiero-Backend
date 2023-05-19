@@ -14,7 +14,7 @@ import { ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('Auth')
-@Controller('api/v1/permision')
+@Controller('permision')
 export class PermisionsController {
   constructor(private readonly permisionsService: PermisionsService) {}
 

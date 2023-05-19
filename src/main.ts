@@ -15,24 +15,20 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
   app.use(helmet());
   app.enableCors();
+  app.setGlobalPrefix('api/v1');
 
   const configD = new DocumentBuilder()
-    .setTitle('DMS API')
-    .setDescription('The DMS API description')
+    .setTitle('Finance Control FT')
+    .setDescription(
+      'Finance Control FT is a project to control your finances, with this project you can control your expenses and incomes.',
+    )
     .setVersion('1.0')
+    .addTag('Finance Control FT')
     .addTag('Auth')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, configD);
   SwaggerModule.setup('api', app, document);
-
-  const ehs = new DocumentBuilder()
-    .setTitle('EHS')
-    .setDescription('The EHS API description')
-    .setVersion('1.0')
-    .addTag('EHS')
-    .build();
-  const documentEhs = SwaggerModule.createDocument(app, ehs);
-  SwaggerModule.setup('ehs', app, documentEhs);
 
   app.listen(parseInt(port) || 3000);
 }

@@ -13,7 +13,7 @@ import { CreatePhoneDto } from './create-phone.dto';
 import { ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 @ApiTags('Auth')
-@Controller('api/v1/user-phone')
+@Controller('user-phone')
 export class UserPhoneController {
   constructor(private readonly userPhoneService: UserPhoneService) {}
 

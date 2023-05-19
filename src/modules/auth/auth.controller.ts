@@ -18,7 +18,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
 
 @ApiTags('Auth')
-@Controller('api/v1/auth')
+@Controller('auth')
 export class AuthController {
   @Inject(AuthService)
   private readonly authService: AuthService;

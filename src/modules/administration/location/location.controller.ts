@@ -14,7 +14,7 @@ import { ApiTags, ApiParam, ApiResponse } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('Auth')
-@Controller('api/v1/location')
+@Controller('location')
 export class LocationController {
   constructor(private readonly locationService: LocationService) {}
 

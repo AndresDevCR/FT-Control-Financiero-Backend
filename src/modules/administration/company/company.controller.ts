@@ -13,7 +13,7 @@ import { CreateCompanyDto } from './create-company.dto';
 import { ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 @ApiTags('Auth')
-@Controller('api/v1/company')
+@Controller('company')
 export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}
 

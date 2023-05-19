@@ -13,7 +13,7 @@ import { CreateProfileDto } from './create-profile.dto';
 import { ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 @ApiTags('Auth')
-@Controller('api/v1/user-profile')
+@Controller('user-profile')
 export class UserProfileController {
   constructor(private readonly userProfileService: UserProfileService) {}
 

@@ -19,7 +19,7 @@ import { ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { User } from './user.entity';
 import { AuthGuard } from '@nestjs/passport';
 @ApiTags('Auth')
-@Controller('api/v1/user')
+@Controller('user')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
