@@ -5,11 +5,11 @@
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
-  # DMS Backend
+  # Finance Control Backend
 
 ## Description
 
-This is the backend for the DMS project. It is built using NestJS, making use of the TypeORM library for database management.
+This is the backend for the Finance Control project. It is built using NestJS, making use of the TypeORM library for database management.
 
 ## Installation
 
