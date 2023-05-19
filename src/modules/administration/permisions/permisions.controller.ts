@@ -13,7 +13,7 @@ import { CreatePermisionDto } from './create-permision.dto';
 import { ApiParam, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 
-@ApiTags('Auth')
+@ApiTags('Permision')
 @ApiBearerAuth()
 @Controller('permision')
 export class PermisionsController {

@@ -10,7 +10,7 @@ import {
 import { ApplicationService } from './application.service';
 import { CreateApplicationDto } from './create-application.dto';
 import { ApiTags, ApiResponse, ApiParam, ApiBearerAuth } from '@nestjs/swagger';
-@ApiTags('Auth')
+@ApiTags('Application')
 @ApiBearerAuth()
 @Controller('application')
 export class ApplicationController {

@@ -20,7 +20,7 @@ import { User } from './user.entity';
 import { AuthGuard } from '@nestjs/passport';
 @ApiTags('Auth')
 @ApiBearerAuth()
-@Controller('user')
+@Controller('Users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 

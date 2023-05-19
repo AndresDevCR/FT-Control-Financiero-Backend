@@ -12,7 +12,7 @@ import { UserPhoneService } from './phone.service';
 import { CreatePhoneDto } from './create-phone.dto';
 import { ApiParam, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-@ApiTags('Auth')
+@ApiTags('User Phone')
 @ApiBearerAuth()
 @Controller('user-phone')
 export class UserPhoneController {

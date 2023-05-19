@@ -23,7 +23,6 @@ async function bootstrap() {
       'Finance Control FT is a project to control your finances, with this project you can control your expenses and incomes.',
     )
     .setVersion('1.0')
-    .addTag('Finance Control FT')
     .addTag('Auth')
     .addBearerAuth()
     .build();

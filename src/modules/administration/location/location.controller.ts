@@ -13,7 +13,7 @@ import { CreateLocationDto } from './create-location.dto';
 import { ApiTags, ApiParam, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 
-@ApiTags('Auth')
+@ApiTags('Location')
 @ApiBearerAuth()
 @Controller('location')
 export class LocationController {

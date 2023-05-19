@@ -12,7 +12,7 @@ import { CompanyService } from './company.service';
 import { CreateCompanyDto } from './create-company.dto';
 import { ApiParam, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-@ApiTags('Auth')
+@ApiTags('Company')
 @ApiBearerAuth()
 @Controller('company')
 export class CompanyController {

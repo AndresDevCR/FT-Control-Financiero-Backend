@@ -13,7 +13,7 @@ import { CreateAddressDto } from './create-address.dto';
 import { ApiParam, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 
-@ApiTags('Auth')
+@ApiTags('Address')
 @Controller('address')
 @ApiBearerAuth()
 export class AddressController {

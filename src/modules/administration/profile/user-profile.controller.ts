@@ -12,7 +12,7 @@ import { UserProfileService } from './user-profile.service';
 import { CreateProfileDto } from './create-profile.dto';
 import { ApiParam, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-@ApiTags('Auth')
+@ApiTags('User Profile')
 @ApiBearerAuth()
 @Controller('user-profile')
 export class UserProfileController {
