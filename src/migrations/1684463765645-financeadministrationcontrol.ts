@@ -17,6 +17,8 @@ export class financeadministrationcontrol1684463765645
             updated_at TIMESTAMP NOT NULL DEFAULT now()
         );
         `);
+
+        // await queryRunner.query(`DROP TABLE IF EXISTS "${schema}"."user";`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {}
