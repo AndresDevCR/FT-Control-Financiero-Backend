@@ -8,10 +8,8 @@ import { TerminusModule } from '@nestjs/terminus';
 import { AuthModule } from './modules/auth/auth.module';
 import { TypeOrmConfigService } from './typeorm.service';
 import { AdministrationModules } from './modules/administration';
-import { EpsModules } from './modules/eps';
-import { DamageReportModules } from './modules/damage_report';
-import { PolesModules } from './modules/rounds';
-import { TransformerModules } from './modules/rounds/transformers';
+import { InventoryModule } from './inventory/inventory.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -20,10 +18,7 @@ import { TransformerModules } from './modules/rounds/transformers';
     HttpModule,
     AuthModule,
     ...AdministrationModules,
-    ...DamageReportModules,
-    ...EpsModules,
-    ...PolesModules,
-    ...TransformerModules,
+    InventoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
