@@ -6,13 +6,16 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { InventoryService } from './inventory.service';
 import { CreateInventoryDto } from './create-inventory.dto';
 import { ApiTags, ApiParam, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 @Controller('inventory')
 @ApiTags('Inventory')
 @ApiBearerAuth()
+// @UseGuards(AuthGuard('jwt'))
 export class InventoryController {
   constructor(private readonly inventoryService: InventoryService) {}
 
