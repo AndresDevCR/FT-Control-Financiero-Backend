@@ -75,6 +75,6 @@ export class financeadministrationcontrol1684463765645
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`DROP SCHEMA IF EXISTS "${schema}" CASCADE;`);
+
   }
 }
