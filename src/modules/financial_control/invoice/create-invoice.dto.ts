@@ -25,12 +25,12 @@ export class CreateInvoiceDto {
 
     @ApiProperty()
     @IsNotEmpty()
-    @IsDate()
+    @IsString()
     issue_date: Date;
 
     @ApiProperty()
     @IsNotEmpty()
-    @IsDate()
+    @IsString()
     expiration_date: Date;
 
     @ApiProperty()
