@@ -25,7 +25,6 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  @UseGuards(AuthGuard('jwt'))
   @ApiResponse({
     status: 200,
     description: 'Return the user logged with his roles and applications',
