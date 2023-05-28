@@ -48,11 +48,11 @@ export class CreateInvoiceDto {
   @IsNumber()
   order_number: number;
 
-  @ApiProperty()
   @IsOptional()
+  @IsString()
   created_at: Date;
 
-  @ApiProperty()
   @IsOptional()
+  @IsString()
   updated_at: Date;
 }
