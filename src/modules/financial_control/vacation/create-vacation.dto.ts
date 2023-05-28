@@ -33,12 +33,10 @@ export class CreateVacationDto {
   @IsString()
   request_status: string;
 
-  @ApiProperty()
   @IsOptional()
   @IsString()
   created_at: Date;
 
-  @ApiProperty()
   @IsOptional()
   @IsString()
   updated_at: Date;
