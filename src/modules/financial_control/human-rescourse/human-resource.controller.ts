@@ -8,8 +8,8 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
-import { VacationService } from './vacation.service';
-import { CreateVacationDto } from './create-vacation.dto';
+import { HumanRescourseService } from './human-rescourse.service';
+import { CreateHumanRescourseDto } from './create-human-resource.dto';
 import {
   ApiTags,
   ApiParam,
@@ -19,34 +19,34 @@ import {
 } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 
-@Controller('vacation')
-@ApiTags('Vacation')
+@Controller('human-rescourse')
+@ApiTags('Human Rescourse')
 @ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
-export class VacationController {
-  constructor(private readonly vacationService: VacationService) {}
+export class HumanRescourseController {
+  constructor(private readonly humanRescourseService: HumanRescourseService) {}
 
   @Post()
-  @ApiBody({ type: CreateVacationDto })
+  @ApiBody({ type: CreateHumanRescourseDto })
   @ApiResponse({
     status: 201,
     description: 'The record has been successfully created.',
-    type: CreateVacationDto,
+    type: CreateHumanRescourseDto,
   })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   @ApiResponse({ status: 400, description: 'Bad Request.' })
   @ApiResponse({ status: 500, description: 'Internal Server Error.' })
   @ApiResponse({ status: 401, description: 'Unauthorized.' })
   @ApiResponse({ status: 404, description: 'Not Found.' })
-  create(@Body() createVacationDto: CreateVacationDto) {
-    return this.vacationService.create(createVacationDto);
+  create(@Body() createHumanRescourseDto: CreateHumanRescourseDto) {
+    return this.humanRescourseService.create(createHumanRescourseDto);
   }
 
   @Get()
   @ApiResponse({
     status: 200,
-    description: 'Return all vacations',
-    type: CreateVacationDto,
+    description: 'Return all human rescourses',
+    type: CreateHumanRescourseDto,
   })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   @ApiResponse({ status: 400, description: 'Bad Request.' })
@@ -54,15 +54,15 @@ export class VacationController {
   @ApiResponse({ status: 401, description: 'Unauthorized.' })
   @ApiResponse({ status: 404, description: 'Not Found.' })
   findAll() {
-    return this.vacationService.findAll();
+    return this.humanRescourseService.findAll();
   }
 
   @Get(':id')
   @ApiParam({ name: 'id', type: String })
   @ApiResponse({
     status: 200,
-    description: 'Return a vacation by id',
-    type: CreateVacationDto,
+    description: 'Return a human rescourse',
+    type: CreateHumanRescourseDto,
   })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   @ApiResponse({ status: 400, description: 'Bad Request.' })
@@ -70,16 +70,16 @@ export class VacationController {
   @ApiResponse({ status: 401, description: 'Unauthorized.' })
   @ApiResponse({ status: 404, description: 'Not Found.' })
   findOne(@Param('id') id: string) {
-    return this.vacationService.findOne(+id);
+    return this.humanRescourseService.findOne(+id);
   }
 
   @Patch(':id')
   @ApiParam({ name: 'id', type: String })
-  @ApiBody({ type: CreateVacationDto })
+  @ApiBody({ type: CreateHumanRescourseDto })
   @ApiResponse({
     status: 200,
     description: 'The record has been successfully updated.',
-    type: CreateVacationDto,
+    type: CreateHumanRescourseDto,
   })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   @ApiResponse({ status: 400, description: 'Bad Request.' })
@@ -88,9 +88,9 @@ export class VacationController {
   @ApiResponse({ status: 404, description: 'Not Found.' })
   update(
     @Param('id') id: string,
-    @Body() updateVacationDto: CreateVacationDto,
+    @Body() updateHumanRescourseDto: CreateHumanRescourseDto,
   ) {
-    return this.vacationService.update(+id, updateVacationDto);
+    return this.humanRescourseService.update(+id, updateHumanRescourseDto);
   }
 
   @Delete(':id')
@@ -98,7 +98,7 @@ export class VacationController {
   @ApiResponse({
     status: 200,
     description: 'The record has been successfully deleted.',
-    type: CreateVacationDto,
+    type: CreateHumanRescourseDto,
   })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   @ApiResponse({ status: 400, description: 'Bad Request.' })
@@ -106,6 +106,6 @@ export class VacationController {
   @ApiResponse({ status: 401, description: 'Unauthorized.' })
   @ApiResponse({ status: 404, description: 'Not Found.' })
   remove(@Param('id') id: string) {
-    return this.vacationService.remove(+id);
+    return this.humanRescourseService.remove(+id);
   }
 }

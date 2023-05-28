@@ -72,9 +72,29 @@ export class financeadministrationcontrol1684463765645
       primary key ("id")
     );
     `);
+
+    await queryRunner.query(
+      `DROP TABLE IF EXISTS "${schema}"."human_resource";`,
+    );
+
+    await queryRunner.query(`CREATE TABLE "${schema}"."human_resource" (
+      "id" serial not null,
+      "employee_name" varchar(255) not null,
+      "phone" varchar(255) not null,
+      "email" varchar(255) not null,
+      "entry_date" date not null,
+      "salary" int not null,
+      "position" varchar(255) not null,
+      "department" varchar(255) not null,
+      "schedule" varchar(255) not null,
+      "rest_days" varchar(255) not null,
+      "vacation_days" varchar(255) not null,
+      "created_at" timestamp not null default now(),
+      "updated_at" timestamp not null default now(),
+      primary key ("id")
+    );
+    `);
   }
 
-  public async down(queryRunner: QueryRunner): Promise<void> {
-
-  }
+  public async down(queryRunner: QueryRunner): Promise<void> {}
 }

@@ -6,11 +6,10 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class VacationService {
-
   constructor(
     @InjectRepository(Vacation)
     private readonly vacationRepository: Repository<Vacation>,
-  ) { }
+  ) {}
 
   create(createVacationDto: CreateVacationDto) {
     return this.vacationRepository.save(createVacationDto);

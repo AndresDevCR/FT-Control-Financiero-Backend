@@ -1,8 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { FINANCE_ADMINISTRATION_CONTROL as schema } from '@/const';
 
-@Entity({ schema: schema, name: 'vacation' })
-export class Vacation {
+@Entity({ schema: schema, name: 'human_resource' })
+export class HumanRescourse {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -10,16 +10,31 @@ export class Vacation {
   employee_name: string;
 
   @Column()
-  available_quantity: number;
+  phone: string;
 
   @Column()
-  start_date: Date;
+  email: string;
 
   @Column()
-  reentry_date: Date;
+  entry_date: Date;
 
   @Column()
-  request_status: string;
+  salary: number;
+
+  @Column()
+  position: string;
+
+  @Column()
+  department: string;
+
+  @Column()
+  schedule: string;
+
+  @Column()
+  rest_days: string;
+
+  @Column()
+  vacation_days: string;
 
   @Column()
   created_at: Date;
