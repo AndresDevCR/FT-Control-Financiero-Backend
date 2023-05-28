@@ -4,13 +4,12 @@ import { Invoice } from './invoice.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-
 @Injectable()
 export class InvoiceService {
   constructor(
     @InjectRepository(Invoice)
     private readonly invoiceRepository: Repository<Invoice>,
-  ) { }
+  ) {}
   create(createInvoiceDto: CreateInvoiceDto) {
     return this.invoiceRepository.save(createInvoiceDto);
   }
