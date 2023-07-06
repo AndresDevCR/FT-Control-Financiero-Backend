@@ -1,7 +1,15 @@
 import { FINANCE_ADMINISTRATION_CONTROL as schema } from '@/const';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Client } from '../../client/entities/client.entity';
 
-@Entity({ schema })
+@Entity({ name: 'enterprise', schema })
 export class Enterprise {
   @PrimaryGeneratedColumn()
   id: number;
@@ -14,4 +22,7 @@ export class Enterprise {
 
   @Column()
   updated_at: Date;
+
+  @OneToMany(() => Client, (client) => client.enterprise)
+  clients: Client[];
 }
