@@ -3,6 +3,7 @@ import {
   Column,
   Entity,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -39,7 +40,6 @@ export class Client {
   @JoinColumn({ name: 'enterprise_id' })
   enterprise: Enterprise;
 
-  @OneToOne(() => Quotation, (quotation) => quotation.client_id)
-  @JoinColumn({ name: 'client_id' })
-  quotation: Quotation;
+  @OneToMany(() => Quotation, (quotation) => quotation.client)
+  quotations: Quotation[];
 }

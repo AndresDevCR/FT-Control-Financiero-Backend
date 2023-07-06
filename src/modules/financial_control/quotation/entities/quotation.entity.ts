@@ -2,6 +2,7 @@ import { FINANCE_ADMINISTRATION_CONTROL as schema } from '@/const';
 import {
   Column,
   Entity,
+  JoinColumn,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -46,6 +47,7 @@ export class Quotation {
   @Column()
   updated_at: Date;
 
-  @OneToMany(() => Client, (client) => client.quotation)
-  clients: Client[];
+  @OneToOne(() => Client, (client) => client.id)
+  @JoinColumn({ name: 'client_id' })
+  client: Client;
 }

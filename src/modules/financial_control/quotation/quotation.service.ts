@@ -22,14 +22,14 @@ export class QuotationService {
 
   findAll() {
     return this.quotationRepository.find({
-      relations: ['clients'],
+      relations: ['client', 'client.enterprise'],
     });
   }
 
   findOne(id: number) {
     return this.quotationRepository.findOne({
       where: { id },
-      relations: ['clients'],
+      relations: ['client', 'client.enterprise'],
     });
   }
 
