@@ -253,8 +253,7 @@ export class administration1676663942896 implements MigrationInterface {
         salt,
       )}',1, 1);
             `,
-    )
+    );
+  }
+  public async down(queryRunner: QueryRunner): Promise<void> {}
 }
-  public async down(queryRunner: QueryRunner): Promise<void> { }
-}
-
