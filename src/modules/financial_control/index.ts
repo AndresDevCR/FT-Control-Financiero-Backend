@@ -6,6 +6,10 @@ import { InvoiceModule } from './invoice/invoice.module';
 import { QuotationModule } from './quotation/quotation.module';
 import { SupplierModule } from './supplier/supplier.module';
 import { VacationModule } from './vacation/vacation.module';
+import { DepartmentModule } from './department/department.module';
+import { PositionModule } from './position/position.module';
+import { EmployeeModule } from './employee/employee.module';
+import { PaymentModule } from './payment/payment.module';
 
 export const financialControlModules = [
   InventoryModule,
@@ -16,4 +20,8 @@ export const financialControlModules = [
   ClientModule,
   QuotationModule,
   SupplierModule,
+  DepartmentModule,
+  PositionModule,
+  EmployeeModule,
+  PaymentModule,
 ];

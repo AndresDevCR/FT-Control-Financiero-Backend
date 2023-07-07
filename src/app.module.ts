@@ -9,9 +9,6 @@ import { AuthModule } from './modules/auth/auth.module';
 import { TypeOrmConfigService } from './typeorm.service';
 import { AdministrationModules } from './modules/administration';
 import { financialControlModules } from './modules/financial_control';
-import { DepartmentModule } from './modules/financial_control/department/department.module';
-import { PositionModule } from './modules/financial_control/position/position.module';
-import { EmployeeModule } from './modules/financial_control/employee/employee.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -21,9 +18,6 @@ import { EmployeeModule } from './modules/financial_control/employee/employee.mo
     AuthModule,
     ...AdministrationModules,
     ...financialControlModules,
-    DepartmentModule,
-    PositionModule,
-    EmployeeModule,
   ],
   controllers: [AppController],
   providers: [AppService],
