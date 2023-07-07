@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { Department } from '../../department/entities/department.entity';
 import { Position } from '../../position/entities/position.entity';
+import { Payment } from '../../payment/entities/payment.entity';
 
 @Entity({ name: 'employee', schema })
 export class Employee {
@@ -51,4 +52,8 @@ export class Employee {
   @OneToOne(() => Department, (department) => department.employee)
   @JoinColumn({ name: 'department_id' })
   department: Department;
+
+  @OneToOne(() => Payment, (payment) => payment.employee)
+  @JoinColumn({ name: 'id' })
+  payment: Payment;
 }

@@ -31,7 +31,10 @@ export class EmployeeService {
   }
 
   findOne(id: number) {
-    return this.employeeRepository.findOne({ where: { id } });
+    return this.employeeRepository.findOne({
+      where: { id },
+      relations: ['department', 'position'],
+    });
   }
 
   update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
