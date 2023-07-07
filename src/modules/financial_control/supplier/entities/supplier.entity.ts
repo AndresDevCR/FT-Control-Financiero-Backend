@@ -1,5 +1,6 @@
 import { FINANCE_ADMINISTRATION_CONTROL as schema } from '@/const';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Invoice } from '../../invoice/invoice.entity';
 
 @Entity({ name: 'supplier', schema })
 export class Supplier {
@@ -14,4 +15,11 @@ export class Supplier {
 
   @Column()
   updated_at: Date;
+
+  //   @OneToOne(() => Invoice, (invoice) => invoice.quotation_id)
+  //   @JoinColumn({ name: 'id' })
+  //   invoice: Invoice;
+
+  @OneToMany(() => Invoice, (invoice) => invoice.supplier)
+  invoices: Invoice[];
 }

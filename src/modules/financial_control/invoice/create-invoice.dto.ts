@@ -7,26 +7,17 @@ import {
   IsString,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+
 export class CreateInvoiceDto {
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
-  client_name: string;
+  @IsNumber()
+  quotation_id: number;
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
-  address: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  phone: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsEmail()
-  email: string;
+  @IsNumber()
+  supplier_id: number;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -46,12 +37,24 @@ export class CreateInvoiceDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
-  order_number: number;
+  dollar_value: number;
 
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsNumber()
+  total_colon: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsNumber()
+  total_dollar: number;
+
+  @ApiProperty()
   @IsOptional()
   @IsString()
   created_at: Date;
 
+  @ApiProperty()
   @IsOptional()
   @IsString()
   updated_at: Date;

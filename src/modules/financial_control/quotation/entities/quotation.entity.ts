@@ -1,13 +1,13 @@
-import { FINANCE_ADMINISTRATION_CONTROL as schema } from '@/const';
 import {
-  Column,
   Entity,
-  JoinColumn,
-  OneToMany,
-  OneToOne,
+  Column,
   PrimaryGeneratedColumn,
+  OneToOne,
+  JoinColumn,
 } from 'typeorm';
+import { FINANCE_ADMINISTRATION_CONTROL as schema } from '@/const';
 import { Client } from '../../client/entities/client.entity';
+import { Invoice } from '../../invoice/invoice.entity';
 
 @Entity({ name: 'quotation', schema })
 export class Quotation {
@@ -50,4 +50,8 @@ export class Quotation {
   @OneToOne(() => Client, (client) => client.id)
   @JoinColumn({ name: 'client_id' })
   client: Client;
+
+  @OneToOne(() => Invoice, (invoice) => invoice.quotation_id)
+  @JoinColumn({ name: 'id' })
+  invoice: Invoice;
 }
