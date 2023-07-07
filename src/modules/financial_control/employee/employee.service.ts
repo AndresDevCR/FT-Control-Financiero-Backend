@@ -4,12 +4,20 @@ import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Employee } from './entities/employee.entity';
+import { Department } from '../department/entities/department.entity';
+import { Position } from '../position/entities/position.entity';
 
 @Injectable()
 export class EmployeeService {
   constructor(
     @InjectRepository(Employee)
     private employeeRepository: Repository<Employee>,
+
+    @InjectRepository(Department)
+    private departmentRepository: Repository<Department>,
+
+    @InjectRepository(Position)
+    private positionRepository: Repository<Position>,
   ) {}
 
   create(createEmployeeDto: CreateEmployeeDto) {
@@ -17,7 +25,9 @@ export class EmployeeService {
   }
 
   findAll() {
-    return this.employeeRepository.find();
+    return this.employeeRepository.find({
+      relations: ['department', 'position'],
+    });
   }
 
   findOne(id: number) {
