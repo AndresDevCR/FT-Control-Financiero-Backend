@@ -19,10 +19,12 @@ import {
   ApiBody,
   ApiResponse,
 } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('Employee')
 @ApiBearerAuth()
 @Controller('employee')
+@UseGuards(AuthGuard('jwt'))
 export class EmployeeController {
   constructor(private readonly employeeService: EmployeeService) {}
 

@@ -23,6 +23,7 @@ import { AuthGuard } from '@nestjs/passport';
 @ApiTags('Supplier')
 @ApiBearerAuth()
 @Controller('supplier')
+@UseGuards(AuthGuard('jwt'))
 export class SupplierController {
   constructor(private readonly supplierService: SupplierService) {}
 
@@ -35,7 +36,6 @@ export class SupplierController {
 
   @Get()
   @ApiResponse({ status: 200, type: [CreateSupplierDto] })
-  @UseGuards(AuthGuard('jwt'))
   findAll() {
     return this.supplierService.findAll();
   }

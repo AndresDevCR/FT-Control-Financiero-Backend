@@ -23,6 +23,7 @@ import { AuthGuard } from '@nestjs/passport';
 @ApiTags('Position')
 @ApiBearerAuth()
 @Controller('position')
+@UseGuards(AuthGuard('jwt'))
 export class PositionController {
   constructor(private readonly positionService: PositionService) {}
 

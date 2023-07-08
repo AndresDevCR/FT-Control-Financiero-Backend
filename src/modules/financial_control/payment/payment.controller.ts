@@ -23,7 +23,7 @@ import { AuthGuard } from '@nestjs/passport';
 @ApiTags('Payment')
 @ApiBearerAuth()
 @Controller('payment')
-// @UseGuards(AuthGuard('jwt'))
+@UseGuards(AuthGuard('jwt'))
 export class PaymentController {
   constructor(private readonly paymentService: PaymentService) {}
 

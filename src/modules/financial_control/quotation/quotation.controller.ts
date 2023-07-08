@@ -23,6 +23,7 @@ import { AuthGuard } from '@nestjs/passport';
 @ApiTags('Quotation')
 @ApiBearerAuth()
 @Controller('quotation')
+@UseGuards(AuthGuard('jwt'))
 export class QuotationController {
   constructor(private readonly quotationService: QuotationService) {}
 
