@@ -9,6 +9,8 @@ import { AuthModule } from './modules/auth/auth.module';
 import { TypeOrmConfigService } from './typeorm.service';
 import { AdministrationModules } from './modules/administration';
 import { financialControlModules } from './modules/financial_control';
+import { appGallleryModules } from './modules/app-gallery';
+
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -18,6 +20,7 @@ import { financialControlModules } from './modules/financial_control';
     AuthModule,
     ...AdministrationModules,
     ...financialControlModules,
+    ...appGallleryModules,
   ],
   controllers: [AppController],
   providers: [AppService],
