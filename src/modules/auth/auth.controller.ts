@@ -15,7 +15,7 @@ import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto } from './auth.dto';
 import { User } from '../administration/users/user.entity';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiTags, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiResponse, ApiBody } from '@nestjs/swagger';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -24,6 +24,7 @@ export class AuthController {
   private readonly authService: AuthService;
 
   @Post('register')
+  @ApiBody({ type: RegisterDto })
   @ApiResponse({
     status: 200,
     description: 'The record has been successfully created.',
@@ -37,10 +38,11 @@ export class AuthController {
   }
 
   @Post('login')
+  @ApiBody({ type: LoginDto })
   @ApiResponse({
     status: 200,
     description:
-      'Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJBbmRyZXMudmFyZ2FzQGZ1c2lvbnRlY2gucHJvIiwiaWF0IjoxNjc4MTQzNTQ1LCJleHAiOjE3MDk2Nzk1NDV9.aAcGERuXBKjv6lzX3ABccc-eZcKVfOJ6p4Jg12DRLZg',
+      'Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJhbmRyZXMudmFyZ2FzQGZ1c2lvbnRlY2gucHJvIiwiaWF0IjoxNjg4OTYzNDc3LCJleHAiOjE3MjA0OTk0Nzd9.xNgUnt-JuwffO1FfOkoa0X3utKRm4P73x4VMj7vPMBQ',
     type: String,
   })
   private async login(@Body() body: LoginDto) {
