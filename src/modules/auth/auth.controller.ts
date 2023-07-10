@@ -15,7 +15,7 @@ import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto } from './auth.dto';
 import { User } from '../administration/users/user.entity';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiTags, ApiResponse, ApiBody } from '@nestjs/swagger';
+import { ApiTags, ApiResponse, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -52,6 +52,7 @@ export class AuthController {
   }
 
   @Post('refresh')
+  @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
   @ApiResponse({
     status: 200,
@@ -66,6 +67,7 @@ export class AuthController {
   }
 
   @Get('user')
+  @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
   @ApiResponse({
     status: 200,
