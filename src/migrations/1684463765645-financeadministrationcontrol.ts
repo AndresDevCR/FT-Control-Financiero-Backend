@@ -160,7 +160,8 @@ export class financeadministrationcontrol1684463765645
       "request_status" varchar(255) not null,
       "created_at" timestamp not null default now(),
       "updated_at" timestamp not null default now(),
-      primary key ("id")
+      primary key ("id"),
+      foreign key ("employee_id") references "${schema}"."employee" ("id")
     );
   `);
 
