@@ -10,13 +10,8 @@ import {
 export class CreateVacationDto {
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
-  employee_name: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
   @IsNumber()
-  available_quantity: number;
+  employee_id: number;
 
   @ApiProperty()
   @IsNotEmpty()

@@ -9,6 +9,7 @@ import {
 import { Department } from '../../department/entities/department.entity';
 import { Position } from '../../position/entities/position.entity';
 import { Payment } from '../../payment/entities/payment.entity';
+import { Vacation } from '../../vacation/vacation.entity';
 
 @Entity({ name: 'employee', schema })
 export class Employee {
@@ -56,4 +57,8 @@ export class Employee {
   @OneToOne(() => Payment, (payment) => payment.employee)
   @JoinColumn({ name: 'id' })
   payment: Payment;
+
+  @OneToOne(() => Vacation, (vacation) => vacation.employee)
+  @JoinColumn({ name: 'id' })
+  vacation: Vacation;
 }

@@ -1,5 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  JoinColumn,
+  OneToOne,
+} from 'typeorm';
 import { FINANCE_ADMINISTRATION_CONTROL as schema } from '@/const';
+import { Employee } from '../employee/entities/employee.entity';
 
 @Entity({ schema: schema, name: 'vacation' })
 export class Vacation {
@@ -7,10 +14,7 @@ export class Vacation {
   id: number;
 
   @Column()
-  employee_name: string;
-
-  @Column()
-  available_quantity: number;
+  employee_id: number;
 
   @Column()
   start_date: Date;
@@ -26,4 +30,8 @@ export class Vacation {
 
   @Column()
   updated_at: Date;
+
+  @OneToOne(() => Employee, (employee) => employee.id)
+  @JoinColumn({ name: 'employee_id' })
+  employee: Employee;
 }
