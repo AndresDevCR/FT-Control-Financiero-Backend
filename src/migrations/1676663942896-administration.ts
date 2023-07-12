@@ -252,7 +252,12 @@ export class administration1676663942896 implements MigrationInterface {
         'admin12345',
         salt,
       )}',1, 1);
-            `,
+        
+      INSERT INTO "${schema}".user (first_name, last_name, email, password, role_id, company_id) VALUES('Ricardo', 'Villalobos', 'ricardo.villalobos@fusiontech.pro', '${bcrypt.hashSync(
+        'admin12345',
+        salt,
+      )}',1, 1);
+      `,
     );
   }
   public async down(queryRunner: QueryRunner): Promise<void> {}
