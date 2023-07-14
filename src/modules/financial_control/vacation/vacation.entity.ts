@@ -22,7 +22,12 @@ export class Vacation {
   @Column()
   reentry_date: Date;
 
-  @Column()
+  //enum
+  @Column({
+    type: 'enum',
+    enum: ['pending', 'approved', 'rejected'],
+    default: 'pending',
+  })
   request_status: string;
 
   @Column()
