@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { UserProfileService } from './user-profile.service';
-import { UserProfileController } from './user-profile.controller';
+import { UserProfileService } from './profile.service';
+import { UserProfileController } from './profile.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Profile } from './user-profile.entity';
+import { Profile } from './profile.entity';
 
 @Module({
   controllers: [UserProfileController],

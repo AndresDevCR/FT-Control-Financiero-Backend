@@ -57,4 +57,7 @@ export class CreateCompanyDto {
 
   @ApiProperty()
   updated_on: Date;
+
+  @IsOptional()
+  company_uuid: string;
 }

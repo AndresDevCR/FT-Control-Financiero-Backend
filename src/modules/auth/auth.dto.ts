@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Trim } from 'class-sanitizer';
 import {
-  IsDate,
+  IsArray,
   IsEmail,
   IsNotEmpty,
   IsNumber,
@@ -33,22 +33,17 @@ export class RegisterDto {
 
   @ApiProperty()
   @IsOptional()
-  passwordReset: string;
-
-  @ApiProperty()
-  @IsOptional()
   @IsNumber()
   company_id: number;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  role_id: number;
+  @IsOptional()
+  passwordReset: string;
 
   @ApiProperty()
   @IsOptional()
-  @IsNumber()
-  application_id: number;
+  @IsArray()
+  applications: any;
 
   @ApiProperty()
   @IsNotEmpty()

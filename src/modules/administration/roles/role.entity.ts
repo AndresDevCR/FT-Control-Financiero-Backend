@@ -5,10 +5,14 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToOne,
+  ManyToMany,
+  JoinTable,
+  JoinColumn,
 } from 'typeorm';
 
 import { APPLICATION_ADMINISTRATION_SCHEMA as schema } from '../../../const';
 import { User } from '../users/user.entity';
+import { Application } from '../application/application.entity';
 
 @Entity({ schema, name: 'role' })
 export class Role {
@@ -17,6 +21,12 @@ export class Role {
 
   @Column('text')
   name: string;
+
+  @Column('text')
+  display_name: string;
+
+  @Column('integer')
+  application_id: number;
 
   @Column('text')
   description: string;
@@ -29,12 +39,24 @@ export class Role {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToOne(() => User, (user) => user.role)
-  user: User;
+  @ManyToMany(() => User, (user) => user.role, {
+    onDelete: 'NO ACTION',
+    onUpdate: 'NO ACTION',
+  })
+  @JoinTable({
+    name: 'user_has_roles',
+    joinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'role_id',
+      referencedColumnName: 'id',
+    },
+  })
+  users?: User[];
 
-  // @ManyToMany(() => User, (user) => user.roles, {
-  //   onDelete: 'NO ACTION',
-  //   onUpdate: 'NO ACTION',
-  // })
-  // users?: User[];
+  @OneToOne(() => Application, (application) => application.role)
+  @JoinColumn({ name: 'application_id' })
+  application: Application[];
 }

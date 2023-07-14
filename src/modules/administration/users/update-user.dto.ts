@@ -1,26 +1,26 @@
-import { IsEmail, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsEmail, IsOptional } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateUserDto {
+export class UpdateUserDto {
   @ApiProperty()
-  @IsNotEmpty()
+  @IsOptional()
   first_name: string;
 
   @ApiProperty()
-  @IsNotEmpty()
+  @IsOptional()
   last_name: string;
 
   @ApiProperty()
-  @IsNotEmpty()
+  @IsOptional()
   @IsEmail()
   email: string;
 
   @ApiProperty()
-  @IsNotEmpty()
+  @IsOptional()
   password: string;
 
   @ApiProperty()
-  @IsNotEmpty()
+  @IsOptional()
   company_start_date: string;
 
   @ApiProperty()
@@ -28,7 +28,7 @@ export class CreateUserDto {
   is_active: boolean;
 
   @ApiProperty()
-  @IsNotEmpty()
+  @IsOptional()
   applications: any;
 
   @ApiProperty()

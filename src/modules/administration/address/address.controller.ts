@@ -8,14 +8,21 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import {
+  ApiBearerAuth,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+  ApiBody,
+} from '@nestjs/swagger';
+
 import { AddressService } from './address.service';
 import { CreateAddressDto } from './create-address.dto';
-import { ApiParam, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
-import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('Address')
-@Controller('address')
 @ApiBearerAuth()
+@Controller('address')
 export class AddressController {
   constructor(private readonly addressService: AddressService) {}
 
@@ -26,6 +33,7 @@ export class AddressController {
     description: 'The record has been successfully created.',
     type: CreateAddressDto,
   })
+  @ApiBody({ type: CreateAddressDto })
   create(@Body() createAddressDto: CreateAddressDto) {
     return this.addressService.create(createAddressDto);
   }

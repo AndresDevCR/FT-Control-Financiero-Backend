@@ -8,22 +8,34 @@ import {
   UseGuards,
   Req,
   Get,
+  Param,
+  Patch,
 } from '@nestjs/common';
 import { Request } from 'express';
-
-import { AuthService } from './auth.service';
-import { LoginDto, RegisterDto } from './auth.dto';
-import { User } from '../administration/users/user.entity';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiTags, ApiResponse, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiResponse,
+  ApiBearerAuth,
+  ApiBody,
+  ApiParam,
+} from '@nestjs/swagger';
+
+import { JwtAuthGuard } from './auth.guard';
+import { AuthService } from './auth.service';
+import { User } from '../administration/users/user.entity';
+import { LoginDto, RegisterDto } from './auth.dto';
+import { UpdateUserDto } from '../administration/users/update-user.dto';
 
 @ApiTags('Auth')
 @Controller('auth')
+@ApiBearerAuth()
 export class AuthController {
   @Inject(AuthService)
   private readonly authService: AuthService;
 
   @Post('register')
+  @UseGuards(AuthGuard('jwt'))
   @ApiBody({ type: RegisterDto })
   @ApiResponse({
     status: 200,
@@ -37,12 +49,30 @@ export class AuthController {
     return { status: 200, msg: 'The record has been successfully created.' };
   }
 
+  @Patch('user/:id')
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
+  @ApiParam({
+    name: 'id',
+    type: 'number',
+    required: true,
+    description: 'The id of the user to update',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'The record has been successfully updated.',
+    type: UpdateUserDto,
+  })
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.authService.update(+id, updateUserDto);
+  }
+
   @Post('login')
   @ApiBody({ type: LoginDto })
   @ApiResponse({
     status: 200,
     description:
-      'Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJhbmRyZXMudmFyZ2FzQGZ1c2lvbnRlY2gucHJvIiwiaWF0IjoxNjg4OTYzNDc3LCJleHAiOjE3MjA0OTk0Nzd9.xNgUnt-JuwffO1FfOkoa0X3utKRm4P73x4VMj7vPMBQ',
+      'Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJBbmRyZXMudmFyZ2FzQGZ1c2lvbnRlY2gucHJvIiwiaWF0IjoxNjc4MTQzNTQ1LCJleHAiOjE3MDk2Nzk1NDV9.aAcGERuXBKjv6lzX3ABccc-eZcKVfOJ6p4Jg12DRLZg',
     type: String,
   })
   private async login(@Body() body: LoginDto) {
@@ -52,7 +82,6 @@ export class AuthController {
   }
 
   @Post('refresh')
-  @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
   @ApiResponse({
     status: 200,
@@ -67,7 +96,6 @@ export class AuthController {
   }
 
   @Get('user')
-  @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
   @ApiResponse({
     status: 200,
@@ -75,7 +103,7 @@ export class AuthController {
       'Return the user logged with his roles, profile and applications associated',
     type: User,
   })
-  private async getUser(@Req() { user }: Request): Promise<object | never> {
+  private async getUser(@Req() { user }: Request): Promise<object | any> {
     return this.authService.getUser(<User>user);
   }
 }

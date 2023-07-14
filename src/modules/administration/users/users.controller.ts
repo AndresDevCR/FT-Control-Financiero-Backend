@@ -5,28 +5,22 @@ import {
   Patch,
   Param,
   Delete,
+  Headers,
   UseGuards,
   UseInterceptors,
   ClassSerializerInterceptor,
-  Req,
-  Query,
 } from '@nestjs/common';
-import { Request } from 'express';
-import { UsersService } from './users.service';
-import { JwtAuthGuard } from '../../auth/auth.guard';
-import { CreateUserDto } from './create-user.dto';
-import {
-  ApiParam,
-  ApiResponse,
-  ApiTags,
-  ApiBearerAuth,
-  ApiBody,
-} from '@nestjs/swagger';
-import { User } from './user.entity';
 import { AuthGuard } from '@nestjs/passport';
-@ApiTags('Users')
-@ApiBearerAuth()
+import { ApiParam, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+
+import { User } from './user.entity';
+import { UsersService } from './users.service';
+import { UpdateUserDto } from './update-user.dto';
+import { JwtAuthGuard } from '../../auth/auth.guard';
+
+@ApiTags('User')
 @Controller('user')
+@ApiBearerAuth()
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -38,21 +32,9 @@ export class UsersController {
     type: User,
   })
   private async findAll(
-    @Req() { user }: Request,
-    @Query('PageNumber') pageNumber,
-    @Query('PageSize') pageSize,
-    @Query('SearchByName') searchByName,
-    @Query('SearchByCompany') searchByCompany,
-    @Query('SearchByRole') searchByRole,
+    @Headers('x-company-id') company,
   ): Promise<object | any> {
-    return this.usersService.findAll(
-      <User>user,
-      pageNumber,
-      pageSize,
-      searchByName,
-      searchByCompany,
-      searchByRole,
-    );
+    return this.usersService.findAll(company);
   }
 
   @Get(':id')
@@ -65,29 +47,11 @@ export class UsersController {
   @ApiResponse({
     status: 200,
     description: 'The record has been found.',
-    type: CreateUserDto,
+    type: User,
   })
   @UseGuards(JwtAuthGuard)
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
-  }
-
-  @Patch(':id')
-  @UseGuards(JwtAuthGuard)
-  @UseInterceptors(ClassSerializerInterceptor)
-  @ApiParam({
-    name: 'id',
-    type: 'number',
-    required: true,
-    description: 'The id of the user to update',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'The record has been successfully updated.',
-    type: CreateUserDto,
-  })
-  update(@Param('id') id: string, @Body() updateUserDto: CreateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+  findOne(@Param('id') id: string, @Headers('x-company-id') company) {
+    return this.usersService.findOne(+id, company);
   }
 
   @Delete(':id')
@@ -101,7 +65,7 @@ export class UsersController {
   @ApiResponse({
     status: 200,
     description: 'The record has been successfully deleted.',
-    type: CreateUserDto,
+    type: User,
   })
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);

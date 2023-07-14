@@ -9,10 +9,11 @@ import {
   OneToOne,
   JoinColumn,
 } from 'typeorm';
-
 import { APPLICATION_ADMINISTRATION_SCHEMA as schema } from '../../../const';
+
 import { Company } from '../company/company.entity';
-import { Profile } from '../profile/user-profile.entity';
+import { Profile } from '../profile/profile.entity';
+import { Application } from '../application/application.entity';
 import { Role } from '../roles/role.entity';
 
 @Entity({ schema, name: 'user' })
@@ -30,13 +31,7 @@ export class User {
   email: string;
 
   @Column()
-  profile_id: number;
-
-  @Column()
   company_id: number;
-
-  @Column()
-  role_id: number;
 
   @Column('date')
   company_start_date: Date;
@@ -62,32 +57,43 @@ export class User {
   updated_at: Date;
 
   @OneToOne(() => Profile, (profile) => profile.user)
-  @JoinColumn({ name: 'profile_id' })
-  profile: Profile[];
-
-  @OneToOne(() => Role, (role) => role.user)
-  @JoinColumn({ name: 'role_id' })
-  role: Role[];
+  profile: Profile;
 
   @OneToOne(() => Company, (company) => company.user)
   @JoinColumn({ name: 'company_id' })
   company: Company[];
 
-  // @ManyToMany(
-  //   () => Role,
-  //   (role) => role.users, //optional
-  //   { onDelete: 'NO ACTION', onUpdate: 'NO ACTION' },
-  // )
-  // @JoinTable({
-  //   name: 'user_has_role',
-  //   joinColumn: {
-  //     name: 'user_id',
-  //     referencedColumnName: 'id',
-  //   },
-  //   inverseJoinColumn: {
-  //     name: 'role_id',
-  //     referencedColumnName: 'id',
-  //   },
-  // })
-  // roles?: Role[];
+  @ManyToMany(() => Application, (application) => application.users, {
+    onDelete: 'NO ACTION',
+    onUpdate: 'NO ACTION',
+  })
+  @JoinTable({
+    name: 'user_has_applications',
+    joinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'application_id',
+      referencedColumnName: 'id',
+    },
+  })
+  applications?: Application[];
+
+  @ManyToMany(() => Role, (role) => role.users, {
+    onDelete: 'NO ACTION',
+    onUpdate: 'NO ACTION',
+  })
+  @JoinTable({
+    name: 'user_has_roles',
+    joinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'role_id',
+      referencedColumnName: 'id',
+    },
+  })
+  role?: Role[];
 }

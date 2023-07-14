@@ -8,10 +8,18 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import {
+  ApiBearerAuth,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+  ApiBody,
+} from '@nestjs/swagger';
+
 import { UserPhoneService } from './phone.service';
 import { CreatePhoneDto } from './create-phone.dto';
-import { ApiParam, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
-import { AuthGuard } from '@nestjs/passport';
+
 @ApiTags('User Phone')
 @ApiBearerAuth()
 @Controller('user-phone')
@@ -24,6 +32,7 @@ export class UserPhoneController {
     status: 201,
     description: 'The record has been successfully created.',
   })
+  @ApiBody({ type: CreatePhoneDto })
   create(@Body() createUserPhoneDto: CreatePhoneDto) {
     return this.userPhoneService.create(createUserPhoneDto);
   }
