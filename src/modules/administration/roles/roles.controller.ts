@@ -8,27 +8,18 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-import {
-  ApiParam,
-  ApiResponse,
-  ApiTags,
-  ApiBearerAuth,
-  ApiBody,
-} from '@nestjs/swagger';
-
 import { RolesService } from './roles.service';
 import { CreateRoleDto } from './create-role.dto';
-
+import { ApiParam, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 @ApiTags('Roles')
 @ApiBearerAuth()
 @Controller('role')
+@UseGuards(AuthGuard('jwt'))
 export class RolesController {
   constructor(private readonly rolesService: RolesService) {}
 
   @Post()
-  @UseGuards(AuthGuard('jwt'))
-  @ApiBody({ type: CreateRoleDto })
   @ApiResponse({
     status: 200,
     description: 'The record has been successfully created.',
@@ -38,7 +29,6 @@ export class RolesController {
     return this.rolesService.create(createRoleDto);
   }
   @Get()
-  @UseGuards(AuthGuard('jwt'))
   @ApiResponse({
     status: 200,
     description: 'The record has been found.',
@@ -49,7 +39,6 @@ export class RolesController {
   }
 
   @Get(':id')
-  @UseGuards(AuthGuard('jwt'))
   @ApiParam({
     name: 'id',
     type: 'string',
@@ -66,7 +55,6 @@ export class RolesController {
   }
 
   @Patch(':id')
-  @UseGuards(AuthGuard('jwt'))
   @ApiParam({
     name: 'id',
     type: 'string',
@@ -83,7 +71,6 @@ export class RolesController {
   }
 
   @Delete(':id')
-  @UseGuards(AuthGuard('jwt'))
   @ApiParam({
     name: 'id',
     type: 'string',
@@ -97,10 +84,5 @@ export class RolesController {
   })
   remove(@Param('id') id: string) {
     return this.rolesService.remove(+id);
-  }
-
-  @Get('/by/application/:application_id')
-  getRolesByApplication(@Param('application_id') application_id: number) {
-    return this.rolesService.getRolesByApplication(application_id);
   }
 }

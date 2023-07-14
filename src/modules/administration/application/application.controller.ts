@@ -6,20 +6,10 @@ import {
   Patch,
   Param,
   Delete,
-  UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-import {
-  ApiTags,
-  ApiResponse,
-  ApiParam,
-  ApiBearerAuth,
-  ApiBody,
-} from '@nestjs/swagger';
-
 import { ApplicationService } from './application.service';
 import { CreateApplicationDto } from './create-application.dto';
-
+import { ApiTags, ApiResponse, ApiParam, ApiBearerAuth } from '@nestjs/swagger';
 @ApiTags('Application')
 @ApiBearerAuth()
 @Controller('application')
@@ -27,12 +17,10 @@ export class ApplicationController {
   constructor(private readonly applicationService: ApplicationService) {}
 
   @Post()
-  @UseGuards(AuthGuard('jwt'))
   @ApiResponse({
     status: 201,
     description: 'The record has been successfully created.',
   })
-  @ApiBody({ type: CreateApplicationDto })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   @ApiResponse({ status: 500, description: 'Internal Server Error.' })
   @ApiResponse({ status: 400, description: 'Bad Request.' })
@@ -42,7 +30,6 @@ export class ApplicationController {
   }
 
   @Get()
-  @UseGuards(AuthGuard('jwt'))
   @ApiResponse({
     status: 200,
     description: 'The record has been successfully retrieved.',
@@ -56,7 +43,6 @@ export class ApplicationController {
   }
 
   @Get(':id')
-  @UseGuards(AuthGuard('jwt'))
   @ApiParam({ name: 'id', type: 'number' })
   @ApiResponse({
     status: 200,
@@ -71,7 +57,6 @@ export class ApplicationController {
   }
 
   @Patch(':id')
-  @UseGuards(AuthGuard('jwt'))
   @ApiParam({ name: 'id', type: 'number' })
   @ApiResponse({
     status: 200,
@@ -89,7 +74,6 @@ export class ApplicationController {
   }
 
   @Delete(':id')
-  @UseGuards(AuthGuard('jwt'))
   @ApiParam({ name: 'id', type: 'number' })
   @ApiResponse({
     status: 200,

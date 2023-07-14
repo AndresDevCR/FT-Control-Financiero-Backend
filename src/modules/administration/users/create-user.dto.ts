@@ -20,18 +20,6 @@ export class CreateUserDto {
   password: string;
 
   @ApiProperty()
-  @IsNotEmpty()
-  company_start_date: string;
-
-  @ApiProperty()
-  @IsOptional()
-  is_active: boolean;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  applications: any;
-
-  @ApiProperty()
   @IsOptional()
   passwordReset: string;
 }

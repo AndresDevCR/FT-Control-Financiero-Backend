@@ -6,21 +6,12 @@ import {
   Patch,
   Param,
   Delete,
-  Headers,
   UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-import {
-  ApiBearerAuth,
-  ApiParam,
-  ApiResponse,
-  ApiTags,
-  ApiBody,
-} from '@nestjs/swagger';
-
 import { CompanyService } from './company.service';
 import { CreateCompanyDto } from './create-company.dto';
-
+import { ApiParam, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 @ApiTags('Company')
 @ApiBearerAuth()
 @Controller('company')
@@ -53,7 +44,6 @@ export class CompanyController {
 
   @Post()
   @UseGuards(AuthGuard('jwt'))
-  @ApiBody({ type: CreateCompanyDto })
   @ApiResponse({
     status: 201,
     description: 'The record has been successfully created.',

@@ -1,10 +1,8 @@
-import { Role } from './role.entity';
-import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-
 import { CreateRoleDto } from './create-role.dto';
-
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Role } from './role.entity';
 @Injectable()
 export class RolesService {
   constructor(
@@ -24,11 +22,5 @@ export class RolesService {
   }
   remove(id: number) {
     return this.rolesRepository.delete(id);
-  }
-
-  getRolesByApplication(application_id: number) {
-    return this.rolesRepository.find({
-      where: { application_id: application_id },
-    });
   }
 }

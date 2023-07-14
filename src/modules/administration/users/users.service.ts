@@ -1,33 +1,72 @@
-import { Request } from 'express';
-import { REQUEST } from '@nestjs/core';
-import { Not, Repository } from 'typeorm';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Inject, Injectable } from '@nestjs/common';
-
+import { query } from 'express';
+import { Not, Repository } from 'typeorm';
+import { CreateUserDto } from './create-user.dto';
 import { User } from './user.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
-    @Inject(REQUEST) private request: Request,
   ) {}
 
-  async findAll(company) {
-    const company_id = company ?? this.request.user['company_id'];
-    const user_id = this.request.user['id'];
-    return this.userRepository.find({
-      where: { id: Not(user_id), company_id: company_id },
-      relations: ['profile', 'company', 'applications.role'],
+  async findAll(
+    user,
+    pageNumber: number,
+    pageSize: number,
+    searchByName: string,
+    searchByCompany: string,
+    searchByRole: string,
+  ) {
+    let users = await this.userRepository
+      .createQueryBuilder('user')
+      .select([
+        'user.id as id',
+        'user.first_name as first_name',
+        'user.last_name as last_name',
+        'user.email as email',
+        'user.is_active as is_active',
+        'user.company_start_date as company_start_date',
+        'role.name as role_name',
+        'company.name as company_name',
+      ])
+      .where('user.id != :id', { id: user.id })
+      .leftJoin('user.role', 'role')
+      .leftJoin('user.company', 'company');
+
+    console.log(searchByName);
+    console.log(searchByCompany);
+    if (searchByName) {
+      users = users
+        .where('user.first_name ilike :search', { search: `%${searchByName}%` })
+        .orWhere('user.last_name ilike :search', {
+          search: `%${searchByName}%`,
+        })
+        .orWhere('user.email ilike :search', { search: `%${searchByName}%` });
+    }
+
+    if (searchByCompany) {
+      users = users.andWhere('company.name ilike :search', {
+        search: `%${searchByCompany}%`,
+      });
+    }
+
+    return users.orderBy('user.id', 'ASC').getRawMany();
+  }
+
+  findOne(id: number) {
+    return this.userRepository.findOne({
+      where: { id },
+      relations: {
+        profile: true,
+        //role: true,
+      },
     });
   }
 
-  findOne(id: number, company) {
-    const company_id = company ?? this.request.user['company_id'];
-    return this.userRepository.findOne({
-      where: { id: id, company_id: company_id },
-      relations: ['profile', 'company', 'module', 'applications.role'],
-    });
+  update(id: number, updateUserDto: CreateUserDto) {
+    return this.userRepository.update(id, updateUserDto);
   }
 
   remove(id: number) {

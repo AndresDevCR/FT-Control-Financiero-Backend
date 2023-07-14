@@ -8,21 +8,13 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-import {
-  ApiParam,
-  ApiResponse,
-  ApiTags,
-  ApiBearerAuth,
-  ApiBody,
-} from '@nestjs/swagger';
-
+import { UserProfileService } from './user-profile.service';
 import { CreateProfileDto } from './create-profile.dto';
-import { UserProfileService } from './profile.service';
-
+import { ApiParam, ApiResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 @ApiTags('User Profile')
-@Controller('profile')
 @ApiBearerAuth()
+@Controller('user-profile')
 export class UserProfileController {
   constructor(private readonly userProfileService: UserProfileService) {}
 
@@ -32,7 +24,6 @@ export class UserProfileController {
     status: 201,
     description: 'The record has been successfully created.',
   })
-  @ApiBody({ type: CreateProfileDto })
   create(@Body() createUserProfileDto: CreateProfileDto) {
     return this.userProfileService.create(createUserProfileDto);
   }

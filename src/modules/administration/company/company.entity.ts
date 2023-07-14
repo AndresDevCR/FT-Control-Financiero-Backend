@@ -9,13 +9,11 @@ import {
 
 import { APPLICATION_ADMINISTRATION_SCHEMA as schema } from '../../../const';
 import { User } from '../users/user.entity';
+
 @Entity({ schema, name: 'company' })
 export class Company {
   @PrimaryGeneratedColumn()
   id: number;
-
-  @Column()
-  company_uuid: string;
 
   @Column({ nullable: true })
   name: string;
