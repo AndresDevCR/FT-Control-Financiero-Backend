@@ -9,6 +9,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { TypeOrmConfigService } from './typeorm.service';
 import { AdministrationModules } from './modules/administration';
 import { financialControlModules } from './modules/financial_control';
+import { controlCenterModules } from './modules/control_center';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { financialControlModules } from './modules/financial_control';
     AuthModule,
     ...AdministrationModules,
     ...financialControlModules,
+    ...controlCenterModules,
   ],
   controllers: [AppController],
   providers: [AppService],
