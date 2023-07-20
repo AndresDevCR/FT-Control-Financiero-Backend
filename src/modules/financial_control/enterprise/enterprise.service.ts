@@ -21,7 +21,7 @@ export class EnterpriseService {
   }
 
   findOne(id: number) {
-    this.enterpriseRepository.findOne({ where: { id } });
+    return this.enterpriseRepository.findOne({ where: { id } });
   }
 
   update(id: number, updateEnterpriseDto: UpdateEnterpriseDto) {
