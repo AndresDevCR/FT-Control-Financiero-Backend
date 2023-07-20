@@ -117,9 +117,6 @@ export class InvoiceService {
               ['Fecha de vencimiento', `${invoice.expiration_date}`],
               ['Valor en colones', `${invoice.total_colon}`],
               ['Valor en dolares', `${invoice.total_dollar}`],
-              ['Cotización', `${invoice.quotation.quote_title}`],
-              ['Cliente', `${invoice.quotation.client.client_name}`],
-              ['Proveedor', `${invoice.supplier.supplier_name}`],
             ],
           };
 
