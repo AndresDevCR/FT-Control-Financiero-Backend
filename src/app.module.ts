@@ -10,6 +10,7 @@ import { TypeOrmConfigService } from './typeorm.service';
 import { AdministrationModules } from './modules/administration';
 import { financialControlModules } from './modules/financial_control';
 import { controlCenterModules } from './modules/control_center';
+import { LogsModule } from './modules/logbooks/log/logs.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { controlCenterModules } from './modules/control_center';
     ...AdministrationModules,
     ...financialControlModules,
     ...controlCenterModules,
+    LogsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

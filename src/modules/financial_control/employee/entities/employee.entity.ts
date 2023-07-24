@@ -61,4 +61,5 @@ export class Employee {
   @OneToOne(() => Vacation, (vacation) => vacation.employee)
   @JoinColumn({ name: 'id' })
   vacation: Vacation;
+  name: any;
 }

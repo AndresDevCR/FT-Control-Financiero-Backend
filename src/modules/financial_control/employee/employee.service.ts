@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { Employee } from './entities/employee.entity';
 import { Department } from '../department/entities/department.entity';
 import { Position } from '../position/entities/position.entity';
+import { LogsService } from '@/modules/logbooks/log/logs.service';
 
 @Injectable()
 export class EmployeeService {
@@ -18,30 +19,42 @@ export class EmployeeService {
 
     @InjectRepository(Position)
     private positionRepository: Repository<Position>,
+
+    private readonly logsService: LogsService,
   ) {}
 
-  create(createEmployeeDto: CreateEmployeeDto) {
-    return this.employeeRepository.save(createEmployeeDto);
+  async create(createEmployeeDto: CreateEmployeeDto, userId: number) {
+    const employee = this.employeeRepository.create(createEmployeeDto);
+    const res = await this.employeeRepository.save(employee);
+    const log = await this.logsService.createLog(
+      {
+        action: 'create',
+        message: `Employee ${employee.employee_name} has been created`,
+        userId: userId,
+      },
+      userId,
+    );
+    return { employee: res, log };
   }
 
-  findAll() {
+  async findAll() {
     return this.employeeRepository.find({
       relations: ['department', 'position'],
     });
   }
 
-  findOne(id: number) {
+  async findOne(id: number) {
     return this.employeeRepository.findOne({
       where: { id },
       relations: ['department', 'position'],
     });
   }
 
-  update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
+  async update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
     return this.employeeRepository.update(id, updateEmployeeDto);
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     return this.employeeRepository.delete(id);
   }
 }

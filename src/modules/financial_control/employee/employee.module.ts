@@ -7,7 +7,8 @@ import { Department } from '../department/entities/department.entity';
 import { Position } from '../position/entities/position.entity';
 import { Payment } from '../payment/entities/payment.entity';
 import { Vacation } from '../vacation/vacation.entity';
-
+import { Log } from '@/modules/logbooks/log/entities/log.entity';
+import { LogsService } from '@/modules/logbooks/log/logs.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([
@@ -16,9 +17,10 @@ import { Vacation } from '../vacation/vacation.entity';
       Position,
       Payment,
       Vacation,
+      Log,
     ]),
   ],
   controllers: [EmployeeController],
-  providers: [EmployeeService],
+  providers: [EmployeeService, LogsService],
 })
 export class EmployeeModule {}
