@@ -10,8 +10,8 @@ import {
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { PaymentService } from './payment.service';
 import { CreatePaymentDto } from './dto/create-payment.dto';
-import { UpdatePaymentDto } from './dto/update-payment.dto';
 import { Payment } from './entities/payment.entity';
+import { UpdatePaymentDto } from './dto/update-payment.dto';
 
 @ApiTags('payments')
 @Controller('payments')

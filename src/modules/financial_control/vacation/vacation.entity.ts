@@ -1,32 +1,42 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  JoinColumn,
+  OneToOne,
+} from 'typeorm';
 import { FINANCE_ADMINISTRATION_CONTROL as schema } from '@/const';
+import { Employee } from '../employee/entities/employee.entity';
 
-@Entity({schema: schema, name :'vacation'})
+@Entity({ schema: schema, name: 'vacation' })
 export class Vacation {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @PrimaryGeneratedColumn()
-    id:number;
+  @Column()
+  employee_id: number;
 
-    @Column()
-    employee_name:string;
+  @Column()
+  start_date: Date;
 
-    @Column()
-    available_quantity:number;
+  @Column()
+  reentry_date: Date;
 
-    @Column()
-    start_date:Date;
+  //enum
+  @Column({
+    type: 'enum',
+    enum: ['pending', 'approved', 'rejected'],
+    default: 'pending',
+  })
+  request_status: string;
 
-    @Column()
-    reentry_date:Date;
+  @Column()
+  created_at: Date;
 
-    @Column()
-    request_status:string;
+  @Column()
+  updated_at: Date;
 
-    @Column()
-    created_at:Date;
-
-    @Column()
-    updated_at:Date;
+  @OneToOne(() => Employee, (employee) => employee.id)
+  @JoinColumn({ name: 'employee_id' })
+  employee: Employee;
 }
-
-

@@ -15,7 +15,7 @@ import { AuthGuard } from '@nestjs/passport';
 @Controller('inventory')
 @ApiTags('Inventory')
 @ApiBearerAuth()
-// @UseGuards(AuthGuard('jwt'))
+@UseGuards(AuthGuard('jwt'))
 export class InventoryController {
   constructor(private readonly inventoryService: InventoryService) {}
 

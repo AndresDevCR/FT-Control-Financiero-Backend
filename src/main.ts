@@ -14,7 +14,9 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
   app.use(helmet());
-  app.enableCors();
+  app.enableCors({
+    origin: '*',
+  });
   app.setGlobalPrefix('api/v1');
 
   const configD = new DocumentBuilder()

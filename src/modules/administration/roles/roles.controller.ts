@@ -15,11 +15,11 @@ import { AuthGuard } from '@nestjs/passport';
 @ApiTags('Roles')
 @ApiBearerAuth()
 @Controller('role')
+@UseGuards(AuthGuard('jwt'))
 export class RolesController {
   constructor(private readonly rolesService: RolesService) {}
 
   @Post()
-  @UseGuards(AuthGuard('jwt'))
   @ApiResponse({
     status: 200,
     description: 'The record has been successfully created.',
@@ -39,7 +39,6 @@ export class RolesController {
   }
 
   @Get(':id')
-  @UseGuards(AuthGuard('jwt'))
   @ApiParam({
     name: 'id',
     type: 'string',
@@ -56,7 +55,6 @@ export class RolesController {
   }
 
   @Patch(':id')
-  @UseGuards(AuthGuard('jwt'))
   @ApiParam({
     name: 'id',
     type: 'string',
@@ -73,7 +71,6 @@ export class RolesController {
   }
 
   @Delete(':id')
-  @UseGuards(AuthGuard('jwt'))
   @ApiParam({
     name: 'id',
     type: 'string',

@@ -9,12 +9,9 @@ import { AuthModule } from './modules/auth/auth.module';
 import { TypeOrmConfigService } from './typeorm.service';
 import { AdministrationModules } from './modules/administration';
 import { financialControlModules } from './modules/financial_control';
-<<<<<<< Updated upstream
-=======
+import { NotificationModule } from './modules/control_center/notification/notification.module';
 import { controlCenterModules } from './modules/control_center';
 import { LogsModule } from './modules/logbooks/log/logs.module';
-import { NotificationModule } from './modules/control_center/notification/notification.module';
->>>>>>> Stashed changes
 
 @Module({
   imports: [
@@ -25,12 +22,11 @@ import { NotificationModule } from './modules/control_center/notification/notifi
     AuthModule,
     ...AdministrationModules,
     ...financialControlModules,
-<<<<<<< Updated upstream
-=======
     ...controlCenterModules,
     LogsModule,
     NotificationModule,
->>>>>>> Stashed changes
+    ...controlCenterModules,
+    LogsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,48 +1,54 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
 import { FINANCE_ADMINISTRATION_CONTROL as schema } from '@/const';
+import { Quotation } from '../quotation/entities/quotation.entity';
+import { Supplier } from '../supplier/entities/supplier.entity';
 
 @Entity({ schema: schema, name: 'invoice' })
 export class Invoice {
-   
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({ type: 'varchar', length: 255, nullable: false })
-    client_name: string;
+  @Column()
+  quotation_id: number;
 
-    @Column({ type: 'varchar', length: 255, nullable: false })
-    address: string;
+  @Column()
+  supplier_id: number;
 
+  @Column()
+  issue_date: Date;
 
-    @Column({ type: 'varchar', length: 255, nullable: false })
-    phone: string;
+  @Column()
+  expiration_date: Date;
 
-    
-    @Column({ type: 'varchar', length: 255, nullable: false })
-    email: string;
+  @Column()
+  invoice_number: number;
 
+  @Column()
+  dollar_value: number;
 
-    @Column({ type: 'date', nullable: false })
-    issue_date: Date;
+  @Column()
+  total_colon: number;
 
+  @Column()
+  total_dollar: number;
 
-    @Column({ type: 'date', nullable: false })
-    expiration_date: Date;
+  @Column()
+  created_at: Date;
 
+  @Column()
+  updated_at: Date;
 
-    @Column({ type: 'int', nullable: false })
-    invoice_number: number;
+  @OneToOne(() => Quotation, (quotation) => quotation.invoice)
+  @JoinColumn({ name: 'quotation_id' })
+  quotation: Quotation;
 
-
-    @Column({ type: 'int', nullable: false })
-    order_number: number;
-
-
-    @Column({ type: 'timestamp', nullable: false, default: () => 'CURRENT_TIMESTAMP' })
-    created_at: Date;
-
-
-    @Column({ type: 'timestamp', nullable: false, default: () => 'CURRENT_TIMESTAMP' })
-    updated_at: Date;
+  @OneToOne(() => Supplier, (supplier) => supplier.id)
+  @JoinColumn({ name: 'supplier_id' })
+  supplier: Supplier;
 }
-
