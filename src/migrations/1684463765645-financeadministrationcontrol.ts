@@ -71,7 +71,42 @@ export class financeadministrationcontrol1684463765645
       "updated_at" timestamp not null default now(),
       primary key ("id")
     );
+<<<<<<< Updated upstream
     `);
+=======
+  `);
+
+    await queryRunner.query(`
+    CREATE TABLE "${schema}"."payment" (
+      "id" serial not null,
+      "employee_id" int,
+      "biweekly_salary" decimal,
+      "daily_salary" decimal,
+      "subsidy" decimal,
+      "hour_rate" decimal,
+      "extra_time_value" decimal,
+      "extra_time" decimal,
+      "extra_time_total" decimal,
+      "medical_leave_days" decimal,
+      "not_payed_leave_days" decimal,
+      "gross_payment" decimal,
+      "gross_payment_social_deduction" decimal,
+      "payment_advance" decimal,
+      "deduction_total" decimal,
+      "net_payment" decimal,
+      "net_payment_dollar" decimal,
+      "ins_payroll" decimal,
+      "payment_date" date,
+      "income_tax" decimal,
+      "dollar" decimal,
+      "total_salary" decimal,
+      "created_at" timestamp not null default now(),
+      "updated_at" timestamp not null default now(),
+      primary key ("id"),
+      foreign key ("employee_id") references "${schema}"."employee" ("id")
+    );
+  `);
+>>>>>>> Stashed changes
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
