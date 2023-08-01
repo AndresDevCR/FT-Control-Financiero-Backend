@@ -3,8 +3,8 @@ import { Novu } from '@novu/node';
 import { InjectNovu } from './novu.provider';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Employee } from '@/modules/financial_control/employee/entities/employee.entity';
 import { Vacation } from '@/modules/financial_control/vacation/vacation.entity';
+import { Employee } from '@/modules/financial_control/employee/entities/employee.entity';
 
 @Injectable()
 export class NotificationService {
