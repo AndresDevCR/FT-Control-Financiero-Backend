@@ -3,62 +3,79 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
+  Put,
   Delete,
-  UseGuards,
 } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { PaymentService } from './payment.service';
 import { CreatePaymentDto } from './dto/create-payment.dto';
+import { Payment } from './entities/payment.entity';
 import { UpdatePaymentDto } from './dto/update-payment.dto';
-import {
-  ApiTags,
-  ApiBearerAuth,
-  ApiParam,
-  ApiBody,
-  ApiResponse,
-} from '@nestjs/swagger';
-import { AuthGuard } from '@nestjs/passport';
 
-@ApiTags('Payment')
-@ApiBearerAuth()
-@Controller('payment')
-@UseGuards(AuthGuard('jwt'))
+@ApiTags('payments')
+@Controller('payments')
 export class PaymentController {
   constructor(private readonly paymentService: PaymentService) {}
 
+  @ApiOperation({ summary: 'Create a new payment record' })
+  @ApiResponse({
+    status: 201,
+    description: 'The payment record has been created successfully',
+    type: Payment,
+  })
   @Post()
-  @ApiBody({ type: CreatePaymentDto })
-  @ApiResponse({ status: 201, type: CreatePaymentDto })
-  create(@Body() createPaymentDto: CreatePaymentDto) {
+  createPayment(@Body() createPaymentDto: CreatePaymentDto): Promise<Payment> {
     return this.paymentService.create(createPaymentDto);
   }
 
+  @ApiOperation({ summary: 'Get all payment records' })
+  @ApiResponse({
+    status: 200,
+    description: 'Retrieved all payment records successfully',
+    type: [Payment],
+  })
   @Get()
-  @ApiResponse({ status: 200, type: [CreatePaymentDto] })
-  findAll() {
-    return this.paymentService.findAll();
+  findAllPayments(): Promise<Payment[]> {
+    return this.paymentService.findAllPayments();
   }
 
+  @ApiOperation({ summary: 'Get a payment record by ID' })
+  @ApiResponse({
+    status: 200,
+    description: 'Retrieved the payment record successfully',
+    type: Payment,
+  })
+  @ApiResponse({ status: 404, description: 'Payment record not found' })
   @Get(':id')
-  @ApiParam({ name: 'id', type: String })
-  @ApiResponse({ status: 200, type: CreatePaymentDto })
-  findOne(@Param('id') id: string) {
-    return this.paymentService.findOne(+id);
+  findOnePayment(@Param('id') id: number): Promise<Payment> {
+    return this.paymentService.findOnePayment(id);
   }
 
-  @Patch(':id')
-  @ApiParam({ name: 'id', type: String })
-  @ApiBody({ type: UpdatePaymentDto })
-  @ApiResponse({ status: 200, type: UpdatePaymentDto })
-  update(@Param('id') id: string, @Body() updatePaymentDto: UpdatePaymentDto) {
-    return this.paymentService.update(+id, updatePaymentDto);
+  @ApiOperation({ summary: 'Update a payment record' })
+  @ApiResponse({
+    status: 200,
+    description: 'Updated the payment record successfully',
+    type: Payment,
+  })
+  @ApiResponse({ status: 404, description: 'Payment record not found' })
+  @Put(':id')
+  updatePayment(
+    @Param('id') id: number,
+    @Body() updatePaymentDto: UpdatePaymentDto,
+  ): Promise<Payment> {
+    return this.paymentService.updatePayment(id, updatePaymentDto);
   }
 
+  @ApiOperation({ summary: 'Delete a payment record' })
+  @ApiResponse({
+    status: 200,
+    description: 'Deleted the payment record successfully',
+    type: Payment,
+  })
+  @ApiResponse({ status: 404, description: 'Payment record not found' })
   @Delete(':id')
-  @ApiParam({ name: 'id', type: String })
-  @ApiResponse({ status: 200, type: CreatePaymentDto })
-  remove(@Param('id') id: string) {
-    return this.paymentService.remove(+id);
+  deletePayment(@Param('id') id: number): Promise<Payment> {
+    return this.paymentService.deletePayment(id);
   }
 }

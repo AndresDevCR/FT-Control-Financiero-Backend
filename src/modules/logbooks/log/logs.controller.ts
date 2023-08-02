@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Req, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Req, UseGuards, Get } from '@nestjs/common';
 import { LogsService } from './logs.service';
 import { CreateLogDto } from './dto/create-log.dto';
 import { Request } from 'express';
@@ -24,5 +24,12 @@ export class LogsController {
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   async create(@Req() req: Request, @Body() createLogDto: CreateLogDto) {
     return this.logsService.createLog(createLogDto, req.user['id']);
+  }
+
+  @Get()
+  @ApiOperation({ summary: 'Get all logs' })
+  @ApiResponse({ status: 403, description: 'Forbidden.' })
+  async findAll() {
+    return this.logsService.findAll();
   }
 }
