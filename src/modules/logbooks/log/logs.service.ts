@@ -18,4 +18,8 @@ export class LogsService {
     log.userId = userId;
     return this.logRepository.save(log);
   }
+
+  async findAll(): Promise<Log[]> {
+    return this.logRepository.find();
+  }
 }

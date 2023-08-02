@@ -65,6 +65,15 @@ export class Payment {
   ins_payroll: number;
 
   @Column()
+  income_tax: number;
+
+  @Column()
+  dollar: number;
+
+  @Column()
+  total_salary: number;
+
+  @Column()
   created_at: Date;
 
   @Column()

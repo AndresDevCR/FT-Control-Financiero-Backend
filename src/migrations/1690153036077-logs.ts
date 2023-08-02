@@ -18,7 +18,10 @@ export class logs1690153036077 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    const tableExists = await queryRunner.hasTable('logs');
+    if (tableExists) {
+      await queryRunner.query(`DROP TABLE "${schema}"."logs";`);
+    }
     await queryRunner.query(`DROP SCHEMA IF EXISTS "${schema}" CASCADE;`);
-    await queryRunner.query(`DROP TABLE "${schema}"."logs";`);
   }
 }

@@ -9,6 +9,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { TypeOrmConfigService } from './typeorm.service';
 import { AdministrationModules } from './modules/administration';
 import { financialControlModules } from './modules/financial_control';
+import { NotificationModule } from './modules/control_center/notification/notification.module';
 import { controlCenterModules } from './modules/control_center';
 import { LogsModule } from './modules/logbooks/log/logs.module';
 
@@ -21,6 +22,9 @@ import { LogsModule } from './modules/logbooks/log/logs.module';
     AuthModule,
     ...AdministrationModules,
     ...financialControlModules,
+    ...controlCenterModules,
+    LogsModule,
+    NotificationModule,
     ...controlCenterModules,
     LogsModule,
   ],
