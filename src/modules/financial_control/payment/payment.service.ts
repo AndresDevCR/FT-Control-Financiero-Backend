@@ -24,6 +24,8 @@ export class PaymentService {
       medical_leave_days,
       income_tax,
       dollar,
+      not_payed_leave_days,
+      payment_advance,
     } = createPaymentDto;
 
     // Fetch employee's monthly salary
@@ -41,26 +43,40 @@ export class PaymentService {
     const hour_rate = daily_salary / 8;
     const extra_time_total = extra_time * hour_rate * 1.5;
     const total_salary =
-      biweekly_salary + extra_time_total - medical_leave_days;
+      biweekly_salary + extra_time_total - not_payed_leave_days * daily_salary;
     const gross_payment_social_deduction = total_salary * 0.1067;
-    const deduction_total = gross_payment_social_deduction + income_tax;
+    const deduction_total =
+      gross_payment_social_deduction + income_tax + payment_advance;
     const net_payment = total_salary - deduction_total;
     const net_payment_dollar = net_payment / dollar;
 
+    const subsidy = daily_salary / 2;
+    const extra_time_value_data = hour_rate * 1.5;
+    const gross_payment = biweekly_salary + extra_time_total;
+    const gross_payment_dollar = gross_payment / dollar;
+
     // Create a new Payment entity
-    const newPayment = new Payment();
-    newPayment.employee_id = employee_id;
-    newPayment.biweekly_salary = biweekly_salary;
-    newPayment.daily_salary = daily_salary;
-    newPayment.hour_rate = hour_rate;
-    newPayment.extra_time_total = extra_time_total;
-    newPayment.total_salary = total_salary;
-    newPayment.gross_payment_social_deduction = gross_payment_social_deduction;
-    newPayment.deduction_total = deduction_total;
-    newPayment.net_payment = net_payment;
-    newPayment.net_payment_dollar = net_payment_dollar;
-    newPayment.dollar = dollar;
-    newPayment.extra_time_value = hour_rate * 1.5;
+    const newPayment = this.paymentRepository.create({
+      ...createPaymentDto,
+      employee_id,
+      biweekly_salary,
+      daily_salary,
+      subsidy,
+      hour_rate,
+      extra_time,
+      extra_time_value: extra_time_value_data,
+      medical_leave_days,
+      gross_payment,
+      gross_payment_dollar,
+      income_tax,
+      dollar,
+      extra_time_total,
+      total_salary,
+      gross_payment_social_deduction,
+      deduction_total,
+      net_payment,
+      net_payment_dollar,
+    });
 
     // Save the new Payment entity to the database
     return this.paymentRepository.save(newPayment);

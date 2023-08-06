@@ -47,6 +47,9 @@ export class Payment {
   gross_payment: number;
 
   @Column()
+  gross_payment_dollar: number;
+
+  @Column()
   gross_payment_social_deduction: number;
 
   @Column()

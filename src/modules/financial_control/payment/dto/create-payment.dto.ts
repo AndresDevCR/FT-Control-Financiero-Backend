@@ -48,6 +48,10 @@ export class CreatePaymentDto {
 
   @ApiProperty()
   @IsNumber()
+  gross_payment_dollar: number;
+
+  @ApiProperty()
+  @IsNumber()
   gross_payment_social_deduction: number;
 
   @ApiProperty()

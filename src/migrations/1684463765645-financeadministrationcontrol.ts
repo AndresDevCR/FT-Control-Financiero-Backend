@@ -179,6 +179,7 @@ export class financeadministrationcontrol1684463765645
       "medical_leave_days" decimal,
       "not_payed_leave_days" decimal,
       "gross_payment" decimal,
+      "gross_payment_dollar" decimal,
       "gross_payment_social_deduction" decimal,
       "payment_advance" decimal,
       "deduction_total" decimal,
