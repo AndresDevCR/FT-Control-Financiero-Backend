@@ -43,8 +43,6 @@ export class NotificationService {
     return result.data;
   }
 
-
-
   async paymentEmail(id: number) {
     const payment = await this.paymentRepository.findOne({
       where: { id },
