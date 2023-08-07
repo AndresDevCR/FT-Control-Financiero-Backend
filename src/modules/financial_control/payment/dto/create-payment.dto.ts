@@ -36,7 +36,8 @@ export class CreatePaymentDto {
   @IsNumber()
   extra_time_total: number;
 
-  @IsOptional()
+  @ApiProperty()
+  @IsNotEmpty()
   @IsNumber()
   medical_leave_days: number;
 
