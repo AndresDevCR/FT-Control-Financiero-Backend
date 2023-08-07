@@ -43,13 +43,15 @@ export class NotificationService {
     return result.data;
   }
 
+
+
   async paymentEmail(id: number) {
     const payment = await this.paymentRepository.findOne({
       where: { id },
       relations: ['employee'],
     });
 
-    const result = await this.novu.trigger('pago', {
+    const result = await this.novu.trigger('pagos', {
       to: {
         subscriberId: `${payment.employee.id}`,
         email: `${payment.employee.email}`,
