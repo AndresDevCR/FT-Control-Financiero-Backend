@@ -6,8 +6,12 @@ import { NotificationController } from './notification.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Vacation } from '@/modules/financial_control/vacation/vacation.entity';
 import { Employee } from '@/modules/financial_control/employee/entities/employee.entity';
+import { Payment } from '@/modules/financial_control/payment/entities/payment.entity';
 @Module({
-  imports: [TypeOrmModule.forFeature([Employee, Vacation]), ConfigModule],
+  imports: [
+    TypeOrmModule.forFeature([Employee, Vacation, Payment]),
+    ConfigModule,
+  ],
   providers: [NovuProvider, NotificationService],
   controllers: [NotificationController],
 })
