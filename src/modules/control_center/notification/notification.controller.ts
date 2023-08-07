@@ -14,4 +14,12 @@ export class NotificationController {
   sendVacationEmail(@Param('id') id: number) {
     return this.notificationService.vacationEmail(id);
   }
+
+  @ApiOperation({ summary: 'Send payment email' })
+  @ApiResponse({ status: 200, description: 'Email sent' })
+  @ApiParam({ name: 'id', type: Number })
+  @Post('payment-emails/:id')
+  sendPaymentEmail(@Param('id') id: number) {
+    return this.notificationService.paymentEmail(id);
+  }
 }
