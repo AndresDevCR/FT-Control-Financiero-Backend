@@ -36,7 +36,10 @@ export class AuthService {
     });
 
     if (existingUser) {
-      throw new HttpException('Email already in use', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'El email ya esta en uso',
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     const newUser: User = this.repository.create({
@@ -58,7 +61,7 @@ export class AuthService {
 
     if (!user) {
       throw new HttpException(
-        'Invalid User or Password',
+        'Usuario o contraseña incorrectos',
         HttpStatus.UNAUTHORIZED,
       );
     }
@@ -70,7 +73,7 @@ export class AuthService {
 
     if (!isPasswordValid) {
       throw new HttpException(
-        'Invalid User or Password',
+        'Usuario o contraseña incorrectos',
         HttpStatus.UNAUTHORIZED,
       );
     }
@@ -108,7 +111,10 @@ export class AuthService {
         where: { email },
       });
       if (existingUser) {
-        throw new HttpException('Email already in use', HttpStatus.BAD_REQUEST);
+        throw new HttpException(
+          'El email ya esta en uso',
+          HttpStatus.BAD_REQUEST,
+        );
       }
     }
 

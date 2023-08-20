@@ -1,11 +1,11 @@
 import { Controller, Get, Param, Res } from '@nestjs/common';
 import { ApiResponse, ApiTags, ApiParam } from '@nestjs/swagger';
-import { InvoiceService } from './panel.service';
+import { PaymentService } from './payment.service';
 @Controller()
-export class InvoiceController {
-  constructor(private readonly appService: InvoiceService) {}
+export class PaymentController {
+  constructor(private readonly appService: PaymentService) {}
 
-  @Get('/v1/pdf/download/invoice/:id')
+  @Get('/v1/pdf/download/payment/:id')
   @ApiTags('PDF')
   @ApiParam({ name: 'id', type: 'number' })
   @ApiResponse({
@@ -18,7 +18,7 @@ export class InvoiceController {
     res.set({
       'Content-Type': 'application/pdf',
       'Content-Disposition':
-        'attachment; filename=Invoice-Control-Financiero.pdf',
+        'attachment; filename=Payment-Control-Financiero.pdf',
       'Content-Length': buffer.length,
     });
 

@@ -5,14 +5,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as qrcode from 'qrcode';
 import { join, resolve } from 'path';
-import { Invoice } from '@/modules/financial_control/invoice/invoice.entity';
+import { Payment } from '@/modules/financial_control/payment/entities/payment.entity';
 const PDFDocument = require('pdfkit-table');
 
 @Injectable()
-export class InvoiceService {
+export class PaymentService {
   constructor(
-    @InjectRepository(Invoice)
-    private readonly invoiceRepository: Repository<Invoice>,
+    @InjectRepository(Payment)
+    private readonly paymentRepository: Repository<Payment>,
   ) {}
 
   async generateQRCode(url: string): Promise<Buffer> {
@@ -31,11 +31,11 @@ export class InvoiceService {
 
   async generarPDF(id: any): Promise<Buffer> {
     const pdfBuffer: Buffer = await new Promise(async (resolve) => {
-      const invoice = await this.invoiceRepository.findOne({ where: { id } });
+      const payment = await this.paymentRepository.findOne({ where: { id } });
 
       try {
-        if (!invoice) {
-          throw new NotFoundException('No se encontró el invoice solicitado');
+        if (!payment) {
+          throw new NotFoundException('No se encontró el payment solicitado');
         } else {
           const doc = new PDFDocument({
             size: 'LETTER',
@@ -86,7 +86,7 @@ export class InvoiceService {
           doc.moveDown();
           doc.text('', 0, 400);
           doc.font('Helvetica-Bold').fontSize(24);
-          doc.text('EPS invoicees', {
+          doc.text('Pagos', {
             width: doc.page.width,
             align: 'center',
           });
@@ -95,7 +95,7 @@ export class InvoiceService {
           doc.addPage();
           doc.text('', 50, 70);
           doc.font('Helvetica-Bold').fontSize(20);
-          doc.text('EPS invoicees');
+          doc.text('Pagos');
           doc.moveDown();
           doc.font('Helvetica').fontSize(16);
 
@@ -106,17 +106,35 @@ export class InvoiceService {
           doc.moveDown();
 
           const table = {
-            title: 'Tabla de detalles del invoice',
-            subtitle: 'A continuación se muestran los detalles del invoice',
+            title: 'Tabla de detalles del payment',
+            subtitle: 'A continuación se muestran los detalles del Pagos',
             headers: ['Nombre', 'Descripción'],
 
             rows: [
-              ['ID', `${invoice.id}`],
-              ['Numero de factura', `${invoice.invoice_number}`],
-              ['Fecha de emisión', `${invoice.issue_date}`],
-              ['Fecha de vencimiento', `${invoice.expiration_date}`],
-              ['Valor en colones', `${invoice.total_colon}`],
-              ['Valor en dolares', `${invoice.total_dollar}`],
+              ['ID', `${payment.id}`],
+              ['Salario quincenal', `${payment.biweekly_salary}`],
+              ['Salario diario', `${payment.daily_salary}`],
+              ['Subsidio', `${payment.subsidy}`],
+              ['Tarifa por hora', `${payment.hour_rate}`],
+              ['Valor de horas extras', `${payment.extra_time_value}`],
+              ['Horas extras', `${payment.extra_time}`],
+              ['Total de horas extras', `${payment.extra_time_total}`],
+              ['Días de licencia médica', `${payment.medical_leave_days}`],
+              [
+                'Días de licencia no pagados',
+                `${payment.not_payed_leave_days}`,
+              ],
+              ['Pago bruto', `${payment.gross_payment}`],
+              ['Pago bruto en dólares', `${payment.gross_payment_dollar}`],
+              ['Deducción social', `${payment.gross_payment_social_deduction}`],
+              ['Adelanto de pago', `${payment.payment_advance}`],
+              ['Total de deducciones', `${payment.deduction_total}`],
+              ['Pago neto', `${payment.net_payment}`],
+              ['Pago neto en dólares', `${payment.net_payment_dollar}`],
+              ['Seguro social', `${payment.ins_payroll}`],
+              ['Impuesto sobre la renta', `${payment.income_tax}`],
+              ['Dólar', `${payment.dollar}`],
+              ['Salario total', `${payment.total_salary}`],
             ],
           };
 
@@ -147,7 +165,7 @@ export class InvoiceService {
           doc.font('Helvetica').fontSize(16);
 
           const qrCodeBuffer = await this.generateQRCode(
-            `https://control-financiero.vercel.app/invoice/details/${invoice.id}`,
+            `https://control-financiero.vercel.app/payment/details/${payment.id}`,
           );
           // Agregar el código QR al PDF
           doc.image(qrCodeBuffer, {
