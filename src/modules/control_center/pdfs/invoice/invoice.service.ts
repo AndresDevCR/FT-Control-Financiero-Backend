@@ -31,9 +31,9 @@ export class InvoiceService {
 
   async generarPDF(id: any): Promise<Buffer> {
     const pdfBuffer: Buffer = await new Promise(async (resolve) => {
-      const invoice = await this.invoiceRepository.findOne({ where: { id } });
-
       try {
+        const invoice = await this.invoiceRepository.findOne({ where: { id } });
+
         if (!invoice) {
           throw new NotFoundException('No se encontró el invoice solicitado');
         } else {

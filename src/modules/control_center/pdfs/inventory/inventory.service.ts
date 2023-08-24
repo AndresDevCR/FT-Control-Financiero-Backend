@@ -32,11 +32,11 @@ export class InventoryService {
 
   async generarPDF(id: any): Promise<Buffer> {
     const pdfBuffer: Buffer = await new Promise(async (resolve) => {
-      const inventory = await this.inventoryRepository.findOne({
-        where: { id },
-      });
-
       try {
+        const inventory = await this.inventoryRepository.findOne({
+          where: { id },
+        });
+
         if (!inventory) {
           throw new NotFoundException('No se encontró el inventory solicitado');
         } else {

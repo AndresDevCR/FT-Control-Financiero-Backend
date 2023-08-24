@@ -5,19 +5,19 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as qrcode from 'qrcode';
 import { join, resolve } from 'path';
-import { Vacation } from '@/modules/financial_control/vacation/vacation.entity';
-import { Employee } from '@/modules/financial_control/employee/entities/employee.entity';
+import { Quotation } from '@/modules/financial_control/quotation/entities/quotation.entity';
+import { Client } from '@/modules/financial_control/client/entities/client.entity';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const PDFDocument = require('pdfkit-table');
 
 @Injectable()
-export class VacationService {
+export class QuotationService {
   constructor(
-    @InjectRepository(Vacation)
-    private readonly vacationRepository: Repository<Vacation>,
+    @InjectRepository(Quotation)
+    private readonly quotationRepository: Repository<Quotation>,
 
-    @InjectRepository(Employee)
-    private readonly employeeRepository: Repository<Employee>,
+    @InjectRepository(Client)
+    private readonly clientRepository: Repository<Client>,
   ) {}
 
   async generateQRCode(url: string): Promise<Buffer> {
@@ -37,15 +37,15 @@ export class VacationService {
   async generarPDF(id: any): Promise<Buffer> {
     const pdfBuffer: Buffer = await new Promise(async (resolve) => {
       try {
-        const vacation = await this.vacationRepository.findOne({
+        const quotation = await this.quotationRepository.findOne({
           where: { id },
         });
-        const employee = await this.employeeRepository.findOne({
-          where: { id: vacation.employee_id },
+        const client = await this.clientRepository.findOne({
+          where: { id: quotation.client_id },
         });
 
-        if (!vacation) {
-          throw new NotFoundException('No se encontró el vacation solicitado');
+        if (!quotation) {
+          throw new NotFoundException('No se encontró el quotation solicitado');
         } else {
           const doc = new PDFDocument({
             size: 'LETTER',
@@ -96,7 +96,7 @@ export class VacationService {
           doc.moveDown();
           doc.text('', 0, 400);
           doc.font('Helvetica-Bold').fontSize(24);
-          doc.text('Vacaciones', {
+          doc.text('Cotizaciones', {
             width: doc.page.width,
             align: 'center',
           });
@@ -105,7 +105,7 @@ export class VacationService {
           doc.addPage();
           doc.text('', 50, 70);
           doc.font('Helvetica-Bold').fontSize(20);
-          doc.text('Vacaciones');
+          doc.text('Cotizaciones');
           doc.moveDown();
           doc.font('Helvetica').fontSize(16);
 
@@ -116,16 +116,23 @@ export class VacationService {
           doc.moveDown();
 
           const table = {
-            title: 'Tabla de detalles del vacation',
+            title: 'Tabla de detalles de Cotizaciones',
             subtitle:
-              'A continuación se muestran los detalles de las Vacaciones',
+              'A continuación se muestran los detalles de las Cotizaciones',
             headers: ['Nombre', 'Descripción'],
+
             rows: [
-              ['ID', `${vacation.id}`],
-              ['Empleado', `${employee.employee_name}`],
-              ['Fecha de inicio', `${vacation.start_date}`],
-              ['Fecha de reingreso', `${vacation.reentry_date}`],
-              ['Estado de solicitud', `${vacation.request_status}`],
+              ['ID', `${quotation.id}`],
+              ['Cliente', `${client.client_name}`],
+              ['Total de pago', `${quotation.total_payment}`],
+              ['Total de pago en dólares', `${quotation.total_payment_dollar}`],
+              ['Código de factura electrónica', `${quotation.e_invoice_code}`],
+              ['Fecha de emisión', `${quotation.issue_date}`],
+              ['Número de orden de compra', `${quotation.po_number}`],
+              ['Fecha de orden de compra', `${quotation.po_date}`],
+              ['Descripción', `${quotation.description}`],
+              ['Título de la cotización', `${quotation.quote_title}`],
+              ['Fecha de creación', `${quotation.created_at}`],
             ],
           };
 
@@ -156,7 +163,7 @@ export class VacationService {
           doc.font('Helvetica').fontSize(16);
 
           const qrCodeBuffer = await this.generateQRCode(
-            `https://control-financiero.vercel.app/vacation/details/${vacation.id}`,
+            `https://control-financiero.vercel.app/quotation/details/${quotation.id}`,
           );
           // Agregar el código QR al PDF
           doc.image(qrCodeBuffer, {

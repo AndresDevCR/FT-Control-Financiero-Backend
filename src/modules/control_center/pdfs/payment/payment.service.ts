@@ -31,9 +31,9 @@ export class PaymentService {
 
   async generarPDF(id: any): Promise<Buffer> {
     const pdfBuffer: Buffer = await new Promise(async (resolve) => {
-      const payment = await this.paymentRepository.findOne({ where: { id } });
-
       try {
+        const payment = await this.paymentRepository.findOne({ where: { id } });
+
         if (!payment) {
           throw new NotFoundException('No se encontró el payment solicitado');
         } else {

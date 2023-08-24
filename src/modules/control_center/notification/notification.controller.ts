@@ -22,4 +22,12 @@ export class NotificationController {
   sendPaymentEmail(@Param('id') id: number) {
     return this.notificationService.paymentEmail(id);
   }
+
+  @ApiOperation({ summary: 'Send invoice email' })
+  @ApiResponse({ status: 200, description: 'Email sent' })
+  @ApiParam({ name: 'id', type: Number })
+  @Post('invoice-emails/:id')
+  sendInvoiceEmail(@Param('id') id: number) {
+    return this.notificationService.invoiceEmail(id);
+  }
 }

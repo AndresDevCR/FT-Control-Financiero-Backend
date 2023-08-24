@@ -6,6 +6,9 @@ import { Repository } from 'typeorm';
 import { Vacation } from '@/modules/financial_control/vacation/vacation.entity';
 import { Employee } from '@/modules/financial_control/employee/entities/employee.entity';
 import { Payment } from '@/modules/financial_control/payment/entities/payment.entity';
+import { Invoice } from '@/modules/financial_control/invoice/invoice.entity';
+import { Supplier } from '@/modules/financial_control/supplier/entities/supplier.entity';
+import { Client } from '@/modules/financial_control/client/entities/client.entity';
 
 @Injectable()
 export class NotificationService {
@@ -21,6 +24,15 @@ export class NotificationService {
 
     @InjectRepository(Payment)
     private readonly paymentRepository: Repository<Payment>,
+
+    @InjectRepository(Invoice)
+    private readonly invoiceRepository: Repository<Invoice>,
+
+    @InjectRepository(Supplier)
+    private readonly supplierRepository: Repository<Supplier>,
+
+    @InjectRepository(Client)
+    private readonly clientRepository: Repository<Client>,
   ) {}
 
   async vacationEmail(id: number) {
@@ -70,6 +82,32 @@ export class NotificationService {
         net_payment_dollar: `${payment.net_payment_dollar}`,
         dollar: `${payment.dollar}`,
         total_salary: `${payment.total_salary}`,
+      },
+    });
+    return result.data;
+  }
+
+  async invoiceEmail(id: number) {
+    const invoice = await this.invoiceRepository.findOne({
+      where: { id },
+      relations: ['supplier', 'quotation', 'quotation.client'],
+    });
+
+    const result = await this.novu.trigger('invoice', {
+      to: {
+        subscriberId: `${invoice.supplier.id}`,
+        email: `${invoice.quotation.client.email}`,
+      },
+      payload: {
+        invoice_number: `${invoice.invoice_number}`,
+        nombre_del_destinatario: `${invoice.quotation.client.client_name}`,
+        quotation_id: `${invoice.quotation.id}`,
+        nombre_del_proveedor: `${invoice.supplier.supplier_name}`,
+        issue_date: `${invoice.issue_date}`,
+        expiration_date: `${invoice.expiration_date}`,
+        dollar_value: `${invoice.dollar_value}`,
+        total_colon: `${invoice.total_colon}`,
+        total_dollar: `${invoice.total_dollar}`,
       },
     });
     return result.data;
