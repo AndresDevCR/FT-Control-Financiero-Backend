@@ -6,6 +6,7 @@ import {
   Param,
   Put,
   Delete,
+  Patch,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { PaymentService } from './payment.service';
@@ -59,7 +60,7 @@ export class PaymentController {
     type: Payment,
   })
   @ApiResponse({ status: 404, description: 'Payment record not found' })
-  @Put(':id')
+  @Patch(':id')
   updatePayment(
     @Param('id') id: number,
     @Body() updatePaymentDto: UpdatePaymentDto,
