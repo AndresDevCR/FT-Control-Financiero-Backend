@@ -38,6 +38,6 @@ export class ClientService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} client`;
+    return this.clientRepository.delete(id);
   }
 }
